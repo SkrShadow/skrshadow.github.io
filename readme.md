@@ -1,21 +1,28 @@
-# Sky proj. ä¸ªäººç½‘é¡µ
+# Sky proj. ¸öÈËÍøÒ³
 
-## åº“å
+## ¿âÃû
 
 skrshadow.github.io
 
-## æè¿°
+## ÃèÊö
 
-è¿™é‡Œæ˜¯è¯•æ­å»ºç½‘ç«™è¯•éªŒä»“åº“ï¼ˆï¼Ÿï¼Ÿï¼Ÿï¼‰ï¼Œæ€»ä¹‹ä¹±æžå°±å¯¹äº†
+ÕâÀïÊÇÊÔ´î½¨ÍøÕ¾ÊÔÑé²Ö¿â£¨£¿£¿£¿£©£¬×ÜÖ®ÂÒ¸ã¾Í¶ÔÁË
 
-ç½‘é¡µBugä¸å°‘ï¼ŒåŠŸèƒ½ä¹Ÿä¸å¤Ÿå®Œå–„ã€‚
+ÍøÒ³Bug²»ÉÙ£¬¹¦ÄÜÒ²²»¹»ÍêÉÆ¡£
 
-é‚£å’‹åŠžå˜›.jpg ï¼ˆæˆ˜æœ¯åŽä»°ï¼‰
-
-
+ÄÇÕ¦°ìÂï.jpg £¨Õ½ÊõºóÑö£©
 
 
 
-/*Authorï¼šSkrshadow*/
+
+
+
+
+
+
+
+
+
+/*Author£ºSkrshadow*/
 
 /*2020.02.17*/
