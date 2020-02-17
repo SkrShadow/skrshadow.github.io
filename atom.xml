@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Skrshadow的个人主页</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2020-02-17T21:31:39.705Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Skrshadow</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>磁盘分区表介绍</title>
+    <link href="http://yoursite.com/2020/02/18/Disk/"/>
+    <id>http://yoursite.com/2020/02/18/Disk/</id>
+    <published>2020-02-18T04:34:21.000Z</published>
+    <updated>2020-02-17T21:31:39.705Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="磁盘分区表介绍"><a href="#磁盘分区表介绍" class="headerlink" title="磁盘分区表介绍"></a>磁盘分区表介绍</h1><h2 id="引述"><a href="#引述" class="headerlink" title="引述"></a>引述</h2><p>常见的硬盘分区表有两种，分别是</p><p><strong>GPT</strong>   GUID磁盘分区表（GUID Partition Table，缩写：GPT）</p><p><strong>MBR</strong>   主引导记录（MBR，Main Boot Record）</p><p>不同的硬盘分区表要配合不同的BIOS引导方式以进入操作系统。</p><h2 id="MBR分区表介绍"><a href="#MBR分区表介绍" class="headerlink" title="MBR分区表介绍"></a>MBR分区表介绍</h2><p>MBR，Master Boot Record。一般位于磁盘的0柱面，0磁头，1扇区。其中包括主引导程序，（446Byte），DPT（Disk Partition Table，即分区表，其中记录着电脑中有多少分区，分区的起始位置，大小及其文件系统）（64Byte），和硬盘有效标识（55AA）（2Byte）（结束标识）。</p><p>由MBR结构可知，MBR只能存储64字节的分区表，而记录每个分区信息需要16字节。所以使用MBR型分区结构的磁盘，最多只能有四个主分区。</p><p>DPT由最多4个16字节的主分区构成。每个16字节的分区信息又由1字节的激活标识符，3字节的分区物理起始位置信息，1字节的分区类型，3字节的物理结束位置信息，4字节的逻辑起始位置信息，以及4字节的分区扇区总数组成。</p><p>在这里举一个分区表的例子。</p><p>如果某一分区在DPT中数据如下：</p><p>80 01 01 00 07 FE BF FC 3F 00 00 00 7E 86 BB 00</p><p>那么该字段含义（16转10进制方法自行百度）：</p><p>80：该分区为磁盘上的活动分区，80是这个分区的激活标志，表示该分区上有系统可引导。</p><p>01 01 00：表示分区开始的磁头号为1，开始的扇区号为1，开始的柱面号为0。即分区起始位置。</p><p>07表示该分区的文件系统为NTFS，另外还有常用的04（FAT16），0B（FAT32）等。</p><p>FE BF FC：表示分区结束的磁头号为254，扇区号为63，柱面号为764，即分区结束位置。</p><p>3F 00 00 00：表示首扇区的的相对扇区号为63。</p><p>7E 86 BB 00表示总扇区数为12289662。</p><p>看了DPT的数据我们可知，4字节32bit，那么一个主分区的扇区总数就不能超出2<sup><sup>32</sup></sup>个。每个扇区大小为512字节，那么单分区最大容量即为2,199,023,255,552‬字节。即为2TB。这也是为什么MBR最多支持单分区2TB容量的原因。</p><p>所以MBR重装系统的时候，一般分区的时候，一般最多4个主分区，每个最大2TB，也就是说我们的MBR仓储盘最多8TB</p><p>（PS：啥家庭啊买个8TB机械当仓储盘，家里有矿啊）</p><p>那么如果你真的买了一个8TB的机械硬盘当仓储盘，系统还是采用MBR引导方式，那么你就只能分四个单分区2TB的分区了。因为其他方案已经不被MBR支持了。</p><p>根据以上对MBR的分析，MBR引导方式的操作系统所在的磁盘分区上，是要有0x80可引导标识的。带有该标识的分区，我们将其称之为活动分区。</p><p>设置活动分区的方法也非常简单，使用Diskgenius（DG）工具，选中你想激活的分区，右键，将此分区设置为活动分区，保存更改。</p><p>一般Windows系统的主引导程序为Windows NT引导程序。XP，2003及以下系统使用NT5.0引导程序。（特征为系统盘根目录的Boot.ini和NTLDR），Win7以后使用NT 6.0引导程序（特征为系统盘下的Bootmgr和Boot文件夹及里面的BCD文件），该主引导记录可使用BOOTICE小工具来更改。</p><h2 id="GPT分区表介绍"><a href="#GPT分区表介绍" class="headerlink" title="GPT分区表介绍"></a>GPT分区表介绍</h2><p>全局唯一标识分区表（GUID Partition Table，别名GUID分区表，缩写GPT）是一个1实体磁盘分区表的结构布局标准。为可扩展固件接口（Extensible Firmware Interface，缩写EFI）标准的一部分。作用就是替代那32bit来存储逻辑位置大小信息的MBR分区表。GPT可以分配64Bits给逻辑块地址，所以对于单扇区大小512Byte的磁盘，GPT的最大单分区容量可以达到恐怖的2<sup><sup>64</sup></sup>字节，也就是8,589,934,592‬TB。（我觉得有生之年我看不到这么大的硬盘。。。）</p><p>以下为GPT的结构。</p><p>与传统MBR一样，GPT也使用LBA取代了CHS。传统MBR信息存储于LBA 0，GPT头文件存储于LBA1，接下来才是分区表。64位操作系统使用32扇区作为GPT分区表，接下来的LBA 3.4是硬盘上第一个扇区的开始。为了减少分区表损坏的风险，GPT在磁盘最后还保存了一份分区表的副本。另外GPT并不使用CHS，所以CHS问题并不会存在。与MBR 1字节的分区标识不同，GPT提供了16字节的全局唯一标识符（GUID）来标识分区类型。这使分区类型发生冲突的概率更小。</p><p>介绍这么多，GPT磁盘没有活动分区，那么它是怎么找到的启动分区呢。其实很简单，16字节的GUID就可以解决这个问题。EFI引导分区有自己<strong>唯一</strong>的GUID：C12A7328-F81F-11D2-BA4B-00A0C93EC93B。Windows将会识别带有该GUID的分区为EFI引导分区，并从里面读取引导数据并加载BCD启动菜单。</p><p>与MBR不同，该方式的系统引导将需要多建立一个256MB左右的EFI分区来存储引导数据。然后再在cmd下执行以下指令</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">cmd</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bcdboot C:\Windows /s X: /f uefi /l zh-cn</span><br></pre></td></tr></tbody></table></figure></div><p>其中：</p><p>C:\Windows 硬盘系统目录</p><p>/s X: 指定ESP分区所在磁盘，根据实际情况修改（一般PE挂载出来都是X盘）</p><p>/f uefi 指定启动方式为uefi</p><p>/l zh-cn 指定uefi启动界面语言为简体中文。</p><p>别忘了在BIOS里将启动类型从Legacy改成UEFI并开启Secure Boot！</p><p>别忘了在BIOS里将启动类型从Legacy改成UEFI并开启Secure Boot！</p><p>别忘了在BIOS里将启动类型从Legacy改成UEFI并开启Secure Boot！</p><p>不然会不开机！Legacy模式下的BIOS是识别不了GPT磁盘的！！</p><p>具体更改随各家主板BIOS设计而定，一般都在Boot那个选项卡下。</p><h2 id="区分硬盘分区表类型方法"><a href="#区分硬盘分区表类型方法" class="headerlink" title="区分硬盘分区表类型方法"></a>区分硬盘分区表类型方法</h2><p>可以使用分区助手看你的C盘后面或前面是否有一个几百MB的分区，新版本分区助手似乎可以直接显示是否是GPT分区。</p><p>其实最直观的看GPT分区的方法我认为，一般只要是UEFI启动类型的电脑都是GPT。（比如开机不是win10祖传小窗户而是主板logo，这种是UEFI启动的比较直观的表现。）</p><h2 id="GUID附表"><a href="#GUID附表" class="headerlink" title="GUID附表"></a>GUID附表</h2><h3 id="引导相关（公用）"><a href="#引导相关（公用）" class="headerlink" title="引导相关（公用）"></a>引导相关（公用）</h3><table><thead><tr><th align="center">分区类型</th><th align="center">GUID</th></tr></thead><tbody><tr><td align="center">EFI文件系统（标准）</td><td align="center">C12A7328-F81F-11D2-BA4B-00A0C93EC93B</td></tr></tbody></table><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><table><thead><tr><th align="center">分区类型</th><th align="center">GUID</th></tr></thead><tbody><tr><td align="center">微软保留分区</td><td align="center">E3C9E316-0B5C-4DB8-817D-F92DF00215AE</td></tr><tr><td align="center">基本数据分区</td><td align="center">EBD0A0A2-B9E5-4433-87C0-68B6B72699C7</td></tr><tr><td align="center">逻辑软盘管理工具元数据分区</td><td align="center">5808C8AA-7E8F-42E0-85D2-E1E90434CFB3</td></tr><tr><td align="center">逻辑软盘管理工具数据分区</td><td align="center">AF9B60A0-1431-4F62-BC68-3311714A69AD</td></tr></tbody></table><h3 id="Mac-OS-X"><a href="#Mac-OS-X" class="headerlink" title="Mac OS X"></a>Mac OS X</h3><table><thead><tr><th align="center">分区类型</th><th align="center">GUID</th></tr></thead><tbody><tr><td align="center">HFS+分区</td><td align="center">48465300-0000-11AA-AA11-00306543ECAC</td></tr><tr><td align="center">UFS</td><td align="center">55465300-0000-11AA-AA11-00306543ECAC</td></tr><tr><td align="center">启动分区</td><td align="center">426F6F74-0000-11AA-AA11-00306543ECAC</td></tr><tr><td align="center">RAID分区</td><td align="center">52414944-0000-11AA-AA11-00306543ECAC</td></tr><tr><td align="center">RAID分区（Offline）</td><td align="center">52414944-5F4F-11AA-AA11-00306543ECAC</td></tr><tr><td align="center">标签</td><td align="center">4C616265-6C00-11AA-AA11-00306543ECAC</td></tr></tbody></table><h3 id="ChromeOS"><a href="#ChromeOS" class="headerlink" title="ChromeOS"></a>ChromeOS</h3><table><thead><tr><th align="center">分区类型</th><th align="center">GUID</th></tr></thead><tbody><tr><td align="center">Linux数据（标准）</td><td align="center">EBD0A0A2-B9E5-4433-87C0-68B6B72699C7</td></tr><tr><td align="center">ChromeOS内核</td><td align="center">FE3A2A5D-4F32-41A7-B725-ACCC3285A309</td></tr><tr><td align="center">ChromeOS根文件系统</td><td align="center">3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC</td></tr><tr><td align="center">ChromeOS固件</td><td align="center">CAB6E88E-ABF3-4102-A07A-D4BB9BE3C1D3</td></tr><tr><td align="center">ChromeOS将来使用</td><td align="center">2E0A753D-9E48-43B0-8337-B15192CB1B5E</td></tr></tbody></table><h3 id="HP-UX"><a href="#HP-UX" class="headerlink" title="HP-UX"></a>HP-UX</h3><table><thead><tr><th align="center">分区类型</th><th align="center">GUID</th></tr></thead><tbody><tr><td align="center">数据分区</td><td align="center">75894C1E-3AEB-11D3-B7C1-7B03A0000000</td></tr><tr><td align="center">服务分区</td><td align="center">E2A1E728-32E3-11D6-A682-7B03A0000000</td></tr></tbody></table><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><table><thead><tr><th align="center">分区类型</th><th align="center">GUID</th></tr></thead><tbody><tr><td align="center">数据分区</td><td align="center">EBD0A0A2-B9E5-4433-87C0-68B6B72699C7</td></tr><tr><td align="center">RAID分区</td><td align="center">A19D880F-05FC-4D3B-A006-743F0F84911E</td></tr><tr><td align="center">交换分区</td><td align="center">0657FD6D-A4AB-43C4-84E5-0933C84B4F4F</td></tr><tr><td align="center">逻辑卷管理员（LVM）分区</td><td align="center">E6D6D379-F507-44C2-A23C-238F2A3DF928</td></tr><tr><td align="center">保留</td><td align="center">8DA63339-0007-60C0-C436-083AC8230908</td></tr></tbody></table><h3 id="FreeBSD"><a href="#FreeBSD" class="headerlink" title="FreeBSD"></a>FreeBSD</h3><table><thead><tr><th align="center">分区类型</th><th align="center">GUID</th></tr></thead><tbody><tr><td align="center">启动分区</td><td align="center">83BD6B9D-7F41-11DC-BE0B-001560B84F0F</td></tr><tr><td align="center">数据分区</td><td align="center">516E7CB4-6ECF-11D6-8FF8-00022D09712B</td></tr><tr><td align="center">交换分区</td><td align="center">516E7CB5-6ECF-11D6-8FF8-00022D09712B</td></tr><tr><td align="center">UFS分区</td><td align="center">516E7CB6-6ECF-11D6-8FF8-00022D09712B</td></tr><tr><td align="center">Vinum volume manager分区</td><td align="center">516E7CB8-6ECF-11D6-8FF8-00022D09712B</td></tr><tr><td align="center">ZFS分区</td><td align="center">516E7CBA-6ECF-11D6-8FF8-00022D09712B</td></tr></tbody></table><p>/<em>Author: Skrshadow</em>/</p><p>/<em>2020.02.18</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;磁盘分区表介绍&quot;&gt;&lt;a href=&quot;#磁盘分区表介绍&quot; class=&quot;headerlink&quot; title=&quot;磁盘分区表介绍&quot;&gt;&lt;/a&gt;磁盘分区表介绍&lt;/h1&gt;&lt;h2 id=&quot;引述&quot;&gt;&lt;a href=&quot;#引述&quot; cl
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于网站</title>
+    <link href="http://yoursite.com/2020/02/18/readme/"/>
+    <id>http://yoursite.com/2020/02/18/readme/</id>
+    <published>2020-02-17T21:29:21.000Z</published>
+    <updated>2020-02-17T21:46:31.960Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="关于网站"><a href="#关于网站" class="headerlink" title="关于网站"></a>关于网站</h1><p>该网站算是个随手搞的网站吧。问就是因为有人吃野味导致的。</p><p><del>我本来可以很快乐，但是吃野味的小机灵鬼害了我.jpg</del></p><p>另一方面发现自己确实需要一个电子日记本或者一个公告墙。</p><p>闲的没事做完的封装，PE等这些东西链接也都会丢在上面，偶尔可能也会用这个发发神经。</p><p>顺带一提这篇文章其实我早写好了你敢信。</p><p><strong>预 谋 已 久</strong></p><p>正经文章，下载地址同步更新<a href="wiki.pchelper666.com">Wiki</a></p><p>如果访问的时候哪个页面突然404，那真是有缘，你基本上是碰上了我在更新网页。等几秒钟就好了。</p><p>也没什么可说的，主要是不想让这个页面空白。</p><p>资源下载站目前使用度盘。等我搞到Onedrive号再换</p><p>这个是<a href="https://pan.baidu.com/s/1FrVqPtKllIL-2PEHTBQKRw" target="_blank" rel="noopener">链接</a>，分享密码是：ug31</p><p>度盘下载慢的话</p><p>家境贫寒解决方案</p><p><a href="http://pandownload.com/" target="_blank" rel="noopener">Pandownload</a></p><p>普通家庭解决方案</p><p><a href="https://www.speedpan.com/" target="_blank" rel="noopener">SpeedpanX</a></p><p>家境平韩解决方案</p><p><a href="https://pan.baidu.com/buy/center?tag=8&from=homepage#/svip" target="_blank" rel="noopener">BaiduDisk会员充值</a></p><p>就这些。</p><p>/<em>Author：Skrshadow</em>/</p><p>/<em>20200217</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;关于网站&quot;&gt;&lt;a href=&quot;#关于网站&quot; class=&quot;headerlink&quot; title=&quot;关于网站&quot;&gt;&lt;/a&gt;关于网站&lt;/h1&gt;&lt;p&gt;该网站算是个随手搞的网站吧。问就是因为有人吃野味导致的。&lt;/p&gt;
+&lt;p&gt;&lt;
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SkyOS V1803 PW 发布</title>
+    <link href="http://yoursite.com/2020/02/17/SkyOS2.0/"/>
+    <id>http://yoursite.com/2020/02/17/SkyOS2.0/</id>
+    <published>2020-02-16T21:29:21.000Z</published>
+    <updated>2020-02-17T21:44:36.625Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="“SkyOS”-Project-封装项目"><a href="#“SkyOS”-Project-封装项目" class="headerlink" title="“SkyOS” Project 封装项目"></a>“SkyOS” Project 封装项目</h1><h2 id="重要的事情说三遍"><a href="#重要的事情说三遍" class="headerlink" title="重要的事情说三遍"></a>重要的事情说三遍</h2><p><strong>重做系统一定别忘了备份数据！</strong></p><p><strong>重做系统一定别忘了备份数据！</strong></p><p><strong>重做系统一定别忘了备份数据！</strong></p><h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>这个项目开始于我小学六年级你敢信…..第一个版本是封装的XP，满满的怀念啊.jpg</p><h2 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h2><p>Ver 1803 Pro For Workstation</p><h2 id="底包版本"><a href="#底包版本" class="headerlink" title="底包版本"></a>底包版本</h2><p>Windows 10.0.17134.1246</p><h2 id="预置应用"><a href="#预置应用" class="headerlink" title="预置应用"></a>预置应用</h2><p>迅雷9破解版（无自启项目，可通过浏览器进行拉起（大概））</p><p>（若不需要可以直接删除程序目录下的Thunder文件夹）</p><h2 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h2><p>Metro应用精简，仅保留应用商店和计算器，天气。</p><p>卸载Windows Defender。</p><p>关闭UAC。</p><p>自动激活脚本。</p><p>安全补丁打到最新。</p><p>另外该版本系统并未集成软件运行库（毕竟是个测试版emmm），后续要继续搞的.jpg</p><p>不出意外这应该是第一个能用没有Bug的1803版本了。耗时两个多月。（万恶的无人值守脚本WDNMD）</p><p><del>配合SkyPE4.0食用风味更佳（小声bb）</del></p><h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a><strong>注释</strong></h2><p><strong>若安装时未联网，请使用开始菜单内实用工具目录下的备用激活工具。另外该目录下也有一些必备的软件，都没有广告。可试着使用一下。</strong></p><p><strong>单独打出来方便复制</strong></p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\ProgramData\Microsoft\Windows\Start Menu\Programs\实用工具</span><br></pre></td></tr></tbody></table></figure></div><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pan.baidu.com/s/1LwJJ5nC9NVlstaFvK5W5Hg 提取码: d3kg</span><br></pre></td></tr></tbody></table></figure></div><p><a href="https://pan.baidu.com/s/1LwJJ5nC9NVlstaFvK5W5Hg" target="_blank" rel="noopener">嫌麻烦可以直接点这里然后自行输入提取码</a></p><p>/<em>Author Skrshadow 2020.2.11</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;“SkyOS”-Project-封装项目&quot;&gt;&lt;a href=&quot;#“SkyOS”-Project-封装项目&quot; class=&quot;headerlink&quot; title=&quot;“SkyOS” Project 封装项目&quot;&gt;&lt;/a&gt;“
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SkyPE V4.0 发布</title>
+    <link href="http://yoursite.com/2020/02/17/SkyPE4.0/"/>
+    <id>http://yoursite.com/2020/02/17/SkyPE4.0/</id>
+    <published>2020-02-16T21:29:21.000Z</published>
+    <updated>2020-02-17T21:32:04.276Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="SkyOS”-Project-PE说明文档"><a href="#SkyOS”-Project-PE说明文档" class="headerlink" title="SkyOS” Project PE说明文档"></a>SkyOS” Project PE说明文档</h1><h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>“SkyOS” PE Project开始于 2018.02.04，原项目为Gho PE合盘项目。基于通用PE工具箱的启动结构进行修改。后来改为Grub4DOS链(wu)式(xian)启(tao)动(wa)结构。基本由三种启动模板组成：直接引导结构，模拟引导结构，桥接引导结构。尝试做一个比较好用的PE。<del>（然而还是没有微PE好用）</del></p><h2 id="本版本PE说明"><a href="#本版本PE说明" class="headerlink" title="本版本PE说明"></a>本版本PE说明</h2><h3 id="PE版本"><a href="#PE版本" class="headerlink" title="PE版本"></a>PE版本</h3><p>SkyPE_V4.0_Full_SK04200104B77LTS</p><h3 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h3><h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><p>Win8XPE添加Dism++和CGI工具，Ghost版本升级，针对EFI-IA32设备添加一些工具。</p><p>UEFI模式引导菜单添加了支持网络的Windows PE</p><p><del>Win10PE（网络支持）添加了一个由于注册表问题引起的StatIsback任务栏黑色且无法调整透明度的Bug</del></p><h4 id="移除"><a href="#移除" class="headerlink" title="移除"></a>移除</h4><p>移除了为Legacy老机器定位的Win8PE。因为能启动这个的老机器基本都能启动现在的10。定位过于鸡肋。</p><p>移除了Grub4DOS引导的Legacy方式安装的Ubuntu。占用空间大，且功能残缺不全。</p><h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p>工具包程序例行升级</p><p>升级列表：Everything Dism++</p><p>改进了引导结构，移除了原Win8PE需要的模拟光驱启动</p><p>原Windows 10 PE（网络支持）重做。大幅缩小体积。</p><p>使用新的压缩算法，每一个Windows Image文件都有不同程度的缩小。</p><h3 id="分区结构方案"><a href="#分区结构方案" class="headerlink" title="分区结构方案"></a>分区结构方案</h3><p>UA分区：32MB，Fbinst分区格式。该分区作用为存储引导数据及引导器GRLDR</p><p>Data分区：大小视U盘空间实际大小而定，默认格式化为NTFS格式。此分区用于数据存放，无其他作用。</p><p>EFI分区：1024MB，FAT32格式。此分区用于存储引导数据及启动数据。具有唯一GUID。所以请不要对其进行磁盘操作，否则会造成PE无法启动。</p><h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><h4 id="Legacy启动顺序说明"><a href="#Legacy启动顺序说明" class="headerlink" title="Legacy启动顺序说明"></a>Legacy启动顺序说明</h4><p>BIOS收到指定启动器指令，载入U盘第一个扇区，即位于UA分区的GRLDR引导器。通过识别内嵌代码，指针跳转至EFI分区，寻找位于SkyPE文件夹下的CFG.ini。</p><p>CFG.ini中同样包含着两条重定向启动指针的命令。第一个会让其跳转至999文件夹下的PE.ini文件，该ini文件内包含着两条引导Bootmgr类文件的指令，分别为Core文件夹下的Win10文件和Win8文件。</p><p>Win10将重定向启动指针，使其读取BCD文件中的引导启动数据，（8888下的8PE），使其找到位于SkyPE文件夹下的SkyPE.WIM文件，至此引导过程结束，开始载入PE</p><h4 id="EFI启动顺序说明"><a href="#EFI启动顺序说明" class="headerlink" title="EFI启动顺序说明"></a>EFI启动顺序说明</h4><p>BIOS收到指定启动器说明，寻找U盘上GUID为C12A7328-F81F-11D2-BA4B-00A0C93EC93B的分区（即为EFI分区），并寻找该分区下的\EFI\BOOT\BOOTX64.EFI（64位，32位文件名为BOOTIA32.EFI）。该文件将会在\EFI\MICROSOFT\BOOT文件夹下寻找BCD文件（由于为了让该PE同时支持32位和64位两种启动环境，并且为了让其适用不同启动场景，该文件夹下有两个BCD文件。一个为B32，一个直接叫BCD）从BCD中读取对应数据之后就可以找到对应的Wim文件了。</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>1.重装系统之前一定要保证自己的数据安全。不要忘了备份。</p><p>2.若自行对PE进行修改，请不要格式化EFI分区和UA分区，这会使他们的GUID标识丢失从而无法启动。</p><p>3.禁止将其用于商业目的，否则nmsl。</p><h2 id="关于安装工具"><a href="#关于安装工具" class="headerlink" title="关于安装工具"></a>关于安装工具</h2><p>第一个Setup.exe支持移动硬盘等所有USB存储设备，第二个Setup2.exe作为备用安装程序，只能识别U盘主控的移动存储设备。建议使用第一个工具安装。比较稳。</p><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pan.baidu.com/s/1oT_s5QY0PZnSQ1GkS2WiXQ 提取码: n47j</span><br></pre></td></tr></tbody></table></figure></div><p>/<em>Update in 2020.2.10 0:16 A.M</em>/</p><p>/<em>Author:Skrshadow</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;SkyOS”-Project-PE说明文档&quot;&gt;&lt;a href=&quot;#SkyOS”-Project-PE说明文档&quot; class=&quot;headerlink&quot; title=&quot;SkyOS” Project PE说明文档&quot;&gt;&lt;/
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+</feed>
