@@ -329,6 +329,32 @@
   </entry>
   
   <entry>
+    <title>主机配置清单</title>
+    <link href="http://www.skrshadow.cn/2019/06/17/Hardware/"/>
+    <id>http://www.skrshadow.cn/2019/06/17/Hardware/</id>
+    <published>2019-06-17T05:20:58.000Z</published>
+    <updated>2020-02-19T23:22:47.926Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="硬件配置清单"><a href="#硬件配置清单" class="headerlink" title="硬件配置清单"></a>硬件配置清单</h1><h2 id="主力"><a href="#主力" class="headerlink" title="主力"></a>主力</h2><table><thead><tr><th align="center">硬件类别</th><th align="center">硬件型号</th><th align="center">状态</th></tr></thead><tbody><tr><td align="center">CPU</td><td align="center">AMD Ryzen 7 1800X</td><td align="center">Y</td></tr><tr><td align="center">主板</td><td align="center">华硕 ROG Strix X470-i</td><td align="center">N</td></tr><tr><td align="center">内存</td><td align="center">芝奇 皇家戟 DDR4 8GB *2</td><td align="center">N</td></tr><tr><td align="center">显卡</td><td align="center">AMD  Radeon RX Vega64 8GB</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">三星 SM961 512GB NVME SSD</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">HGST HDD 7200R 4TB</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">WD Blue 5400R HDD 1TB</td><td align="center">Y</td></tr><tr><td align="center">电源</td><td align="center">海盗船 SF750 750W SFX电源</td><td align="center">N</td></tr><tr><td align="center">散热器</td><td align="center">猫头鹰 L9I</td><td align="center">N</td></tr></tbody></table><h2 id="NAS-Server"><a href="#NAS-Server" class="headerlink" title="NAS Server"></a>NAS Server</h2><table><thead><tr><th align="center">硬件类别</th><th align="center">硬件型号</th><th align="center">状态</th></tr></thead><tbody><tr><td align="center">CPU</td><td align="center">Intel Xeon E3-1231 V3</td><td align="center">N</td></tr><tr><td align="center">主板</td><td align="center">华硕 B85m Pro Gamer</td><td align="center">N</td></tr><tr><td align="center">内存</td><td align="center">金士顿 DDR3 1600 32GB</td><td align="center">N</td></tr><tr><td align="center">显卡</td><td align="center">AMD  Radeon RX 580 4GB</td><td align="center">Y</td></tr><tr><td align="center">硬盘</td><td align="center">SMI 64GB *2 （Sys）</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">三星 SM961 512GB NVME SSD （Cache）</td><td align="center">Y</td></tr><tr><td align="center">硬盘</td><td align="center">HGST HDD 7200R 4TB</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">HGST HDD 7200R 4TB</td><td align="center">N</td></tr><tr><td align="center">电源</td><td align="center">长城巨龙 1250W</td><td align="center">Y</td></tr><tr><td align="center">散热器</td><td align="center">玄冰400</td><td align="center">N</td></tr></tbody></table><p>/<em>Author : Skrshadow</em>/</p><p>/<em>Creative:2019.06.17</em>/</p><p>/<em>Update:2020.02.20</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;硬件配置清单&quot;&gt;&lt;a href=&quot;#硬件配置清单&quot; class=&quot;headerlink&quot; title=&quot;硬件配置清单&quot;&gt;&lt;/a&gt;硬件配置清单&lt;/h1&gt;&lt;h2 id=&quot;主力&quot;&gt;&lt;a href=&quot;#主力&quot; class=
+      
+    
+    </summary>
+    
+    
+      <category term="随笔" scheme="http://www.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="杂七杂八的东西" scheme="http://www.skrshadow.cn/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E7%9A%84%E4%B8%9C%E8%A5%BF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Sky Project 项目说明</title>
     <link href="http://www.skrshadow.cn/2017/07/07/SkyProj/"/>
     <id>http://www.skrshadow.cn/2017/07/07/SkyProj/</id>
