@@ -333,7 +333,7 @@
     <link href="http://www.skrshadow.cn/2019/06/17/Hardware/"/>
     <id>http://www.skrshadow.cn/2019/06/17/Hardware/</id>
     <published>2019-06-17T05:20:58.000Z</published>
-    <updated>2020-02-19T23:22:47.926Z</updated>
+    <updated>2020-02-25T18:20:30.017Z</updated>
     
     <content type="html"><![CDATA[<html><head></head><body><h1 id="硬件配置清单"><a href="#硬件配置清单" class="headerlink" title="硬件配置清单"></a>硬件配置清单</h1><h2 id="主力"><a href="#主力" class="headerlink" title="主力"></a>主力</h2><table><thead><tr><th align="center">硬件类别</th><th align="center">硬件型号</th><th align="center">状态</th></tr></thead><tbody><tr><td align="center">CPU</td><td align="center">AMD Ryzen 7 1800X</td><td align="center">Y</td></tr><tr><td align="center">主板</td><td align="center">华硕 ROG Strix X470-i</td><td align="center">N</td></tr><tr><td align="center">内存</td><td align="center">芝奇 皇家戟 DDR4 8GB *2</td><td align="center">N</td></tr><tr><td align="center">显卡</td><td align="center">AMD  Radeon RX Vega64 8GB</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">三星 SM961 512GB NVME SSD</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">HGST HDD 7200R 4TB</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">WD Blue 5400R HDD 1TB</td><td align="center">Y</td></tr><tr><td align="center">电源</td><td align="center">海盗船 SF750 750W SFX电源</td><td align="center">N</td></tr><tr><td align="center">散热器</td><td align="center">猫头鹰 L9I</td><td align="center">N</td></tr></tbody></table><h2 id="NAS-Server"><a href="#NAS-Server" class="headerlink" title="NAS Server"></a>NAS Server</h2><table><thead><tr><th align="center">硬件类别</th><th align="center">硬件型号</th><th align="center">状态</th></tr></thead><tbody><tr><td align="center">CPU</td><td align="center">Intel Xeon E3-1231 V3</td><td align="center">N</td></tr><tr><td align="center">主板</td><td align="center">华硕 B85m Pro Gamer</td><td align="center">N</td></tr><tr><td align="center">内存</td><td align="center">金士顿 DDR3 1600 32GB</td><td align="center">N</td></tr><tr><td align="center">显卡</td><td align="center">AMD  Radeon RX 580 4GB</td><td align="center">Y</td></tr><tr><td align="center">硬盘</td><td align="center">SMI 64GB *2 （Sys）</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">三星 SM961 512GB NVME SSD （Cache）</td><td align="center">Y</td></tr><tr><td align="center">硬盘</td><td align="center">HGST HDD 7200R 4TB</td><td align="center">N</td></tr><tr><td align="center">硬盘</td><td align="center">HGST HDD 7200R 4TB</td><td align="center">N</td></tr><tr><td align="center">电源</td><td align="center">长城巨龙 1250W</td><td align="center">Y</td></tr><tr><td align="center">散热器</td><td align="center">玄冰400</td><td align="center">N</td></tr></tbody></table><p>/<em>Author : Skrshadow</em>/</p><p>/<em>Creative:2019.06.17</em>/</p><p>/<em>Update:2020.02.20</em>/</p></body></html>]]></content>
     
@@ -350,7 +350,7 @@
       <category term="随笔" scheme="http://www.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="杂七杂八的东西" scheme="http://www.skrshadow.cn/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E7%9A%84%E4%B8%9C%E8%A5%BF/"/>
+      <category term="扯犊子" scheme="http://www.skrshadow.cn/tags/%E6%89%AF%E7%8A%8A%E5%AD%90/"/>
     
   </entry>
   
@@ -359,7 +359,7 @@
     <link href="http://www.skrshadow.cn/2017/07/07/SkyProj/"/>
     <id>http://www.skrshadow.cn/2017/07/07/SkyProj/</id>
     <published>2017-07-07T15:29:21.000Z</published>
-    <updated>2020-02-18T20:21:52.254Z</updated>
+    <updated>2020-02-25T18:20:10.731Z</updated>
     
     <content type="html"><![CDATA[<html><head></head><body><h1 id="Sky-Project项目"><a href="#Sky-Project项目" class="headerlink" title="Sky Project项目"></a>Sky Project项目</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>差不多就是个整合了目前在搞的这些杂七杂八的奇怪东西的一个合集/吧。</p><h2 id="分支目录"><a href="#分支目录" class="headerlink" title="分支目录"></a>分支目录</h2><h3 id="Sky-OS"><a href="#Sky-OS" class="headerlink" title="Sky OS"></a>Sky OS</h3><p>Android定制项目</p><p>其实主要是MIUI玩多了，也玩腻了。总感觉MIUI8还差点火候。有设计却做不出来就很难受。慢慢做吧。</p><p>Windows定制项目</p><p>以前封装的应该有点精简经验了吧…暂时还做不到大砍刀，一个系统包4GB谁受得了，ES也没那么好用，不如去研究一下cmd（To Do）？</p><p>可惜没有第二台电脑进行测试。</p><h3 id="Sky-Tool"><a href="#Sky-Tool" class="headerlink" title="Sky Tool"></a>Sky Tool</h3><p>这个系列打算做一套Windows的实用工具。先从PE开始吧。</p><p>从以前的GhoPE慢慢来吧。只能做到对通用PE的小幅修改，不过好像同作者的那个微PE好像也有修改的余地。很多工具还是通用PE的原装老东西。主要是想要一个网络模块。就很难受了。</p><p>目前想要一个安全的PE，以后EFI肯定是主流了但是老方法又不是不能用。现在主要解决安装困难的问题。不是每个人都喜欢我这么折腾。新出的微PE的三分区方案可以考虑，找时间研究一下。</p><p>就是现在改出来的要么小改动还有以前的影子，要么大改动直接GG。算了，不要急功近利，慢慢来，会好的。</p><p>可惜找不到能帮我画图标 的人。</p><p>这个也慢慢找吧，不着急。反正就算找到了，迟早有一天这些东西也只有我自己一个人做下去。很多经验告诉我，对你这个东西热心的，可能也只存在于热心，而已。</p><h3 id="Sky-Server"><a href="#Sky-Server" class="headerlink" title="Sky Server"></a>Sky Server</h3><p>最后是想要一台全新的主机。越小越好。虽然现在这台花里胡哨的看着还真的不错。</p><p>还有就是想要一个自己的网站。不过服务器好贵啊。。听说备案也很麻烦。就当后话吧</p><p>自己的文件服务器就在我现在NAS的基础上来吧。FreeNAS好像挺好玩。</p><p>后续考虑加入硬件定制。</p><p>就BB这么多吧，明天傻逼学习还要上课。真不想上晚自习。</p><p>/<em>2017.07.07 23.29.21 深夜</em>/</p><p>/<em>====================</em>/</p><p>现在看自己那时候写的东西真好玩23333.高中的小纸条都留着就是个很好的习惯。真是不知道自己为什么那么傻，在这种地方试图找到同样的人。毕竟再怎么搞，本质上也不是啊。</p><p>以后要学乖了吧。这些人忌讳那些，就不说了吧。虽然可能会导致很多事情都忘了。也无所谓了，活下去就好，不要回头。以后的朋友大概也不可能给这种开放的权限了吧。当初决定把这些东西锁起来，真的是个明智的选择。</p><p>毕竟，从一开始，我就只能靠自己啊。</p><p>/<em>2020.02.19 使用Markdown重新排版</em>/</p><p>/<em>在此对这个家伙表示一下感谢吧。能让我这么觉得欠别人的你可是头一个啊233。他那么懒不可能我不让他看他不可能看这的23333，慢慢来吧，老习惯，曾经我收到的支持，我都会百倍还回去。别的也一样。不喜欢欠人人情。</em>/</p><p>/<em>小纸条都搞成电子版了，可以销毁原件了..真希望某人要是看见了这篇文章去练练字…最后我TM都放弃思考了手动输入了wdnmd</em>/</p></body></html>]]></content>
     
@@ -376,7 +376,7 @@
       <category term="随笔" scheme="http://www.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="杂七杂八的东西" scheme="http://www.skrshadow.cn/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E7%9A%84%E4%B8%9C%E8%A5%BF/"/>
+      <category term="扯犊子" scheme="http://www.skrshadow.cn/tags/%E6%89%AF%E7%8A%8A%E5%AD%90/"/>
     
   </entry>
   
