@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.skrshadow.cn/"/>
-  <updated>2020-02-18T08:14:03.770Z</updated>
-  <id>http://www.skrshadow.cn/</id>
+  <link href="http://blog.skrshadow.cn/"/>
+  <updated>2020-02-25T18:35:38.392Z</updated>
+  <id>http://blog.skrshadow.cn/</id>
   
   <author>
     <name>Skrshadow</name>
@@ -17,113 +17,9 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>家庭版win10开启组策略组策略</title>
-    <link href="http://www.skrshadow.cn/2020/02/17/Groupedit/"/>
-    <id>http://www.skrshadow.cn/2020/02/17/Groupedit/</id>
-    <published>2020-02-16T21:29:21.000Z</published>
-    <updated>2020-02-18T08:14:03.770Z</updated>
-    
-    <content type="html"><![CDATA[<html><head></head><body><h1 id="家庭版win10开启组策略"><a href="#家庭版win10开启组策略" class="headerlink" title="家庭版win10开启组策略"></a>家庭版win10开启组策略</h1><p>组策略对于优化和维护Windows系统来说十分重要</p><p>但是windows家庭版系统并不包含组策略</p><p>通过bat脚本可以开启windows家庭版系统的组策略功能</p><p>方法:</p><p>新建一个文档，将下列内容复制进文档，并保存</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">pushd "%~dp0"</span><br><span class="line">dir /b C:\Windows\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt</span><br><span class="line">dir /b C:\Windows\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt</span><br><span class="line">for /f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"C:\Windows\servicing\Packages\%%i"</span><br><span class="line">pause</span><br></pre></td></tr></tbody></table></figure></div><p>将文档扩展名<strong>.txt</strong> 改为 <strong>.bat</strong></p><p>然后右键以管理员身份运行这个文件</p><p>等待脚本执行完以后</p><p>再运行一下gpedit.msc命令，你就发现组策略能用了</p><p>/<em>转载自技术部Wiki</em>/</p><p>/<em>2020.02.18</em>/</p></body></html>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;家庭版win10开启组策略&quot;&gt;&lt;a href=&quot;#家庭版win10开启组策略&quot; class=&quot;headerlink&quot; title=&quot;家庭版win10开启组策略&quot;&gt;&lt;/a&gt;家庭版win10开启组策略&lt;/h1&gt;&lt;p&gt;组
-      
-    
-    </summary>
-    
-    
-      <category term="Windows各种折腾" scheme="http://www.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-      <category term="Windows" scheme="http://www.skrshadow.cn/tags/Windows/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SkyPE V4.0 发布</title>
-    <link href="http://www.skrshadow.cn/2020/02/17/SkyPE4.0/"/>
-    <id>http://www.skrshadow.cn/2020/02/17/SkyPE4.0/</id>
-    <published>2020-02-16T21:29:21.000Z</published>
-    <updated>2020-02-24T02:21:50.101Z</updated>
-    
-    <content type="html"><![CDATA[<html><head></head><body><h1 id="SkyOS”-Project-PE说明文档"><a href="#SkyOS”-Project-PE说明文档" class="headerlink" title="SkyOS” Project PE说明文档"></a>SkyOS” Project PE说明文档</h1><h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>“SkyOS” PE Project开始于 2018.02.04，原项目为Gho PE合盘项目。基于通用PE工具箱的启动结构进行修改。后来改为Grub4DOS链(wu)式(xian)启(tao)动(wa)结构。基本由三种启动模板组成：直接引导结构，模拟引导结构，桥接引导结构。尝试做一个比较好用的PE。<del>（然而还是没有微PE好用）</del></p><h2 id="本版本PE说明"><a href="#本版本PE说明" class="headerlink" title="本版本PE说明"></a>本版本PE说明</h2><h3 id="PE版本"><a href="#PE版本" class="headerlink" title="PE版本"></a>PE版本</h3><p>SkyPE_V4.0_Full_SK04200104B77LTS</p><h3 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h3><h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><p>Win8XPE添加Dism++和CGI工具，Ghost版本升级，针对EFI-IA32设备添加一些工具。</p><p>UEFI模式引导菜单添加了支持网络的Windows PE</p><p><del>Win10PE（网络支持）添加了一个由于注册表问题引起的StatIsback任务栏黑色且无法调整透明度的Bug</del></p><h4 id="移除"><a href="#移除" class="headerlink" title="移除"></a>移除</h4><p>移除了为Legacy老机器定位的Win8PE。因为能启动这个的老机器基本都能启动现在的10。定位过于鸡肋。</p><p>移除了Grub4DOS引导的Legacy方式安装的Ubuntu。占用空间大，且功能残缺不全。</p><h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p>工具包程序例行升级</p><p>升级列表：Everything Dism++</p><p>改进了引导结构，移除了原Win8PE需要的模拟光驱启动</p><p>原Windows 10 PE（网络支持）重做。大幅缩小体积。</p><p>使用新的压缩算法，每一个Windows Image文件都有不同程度的缩小。</p><h3 id="分区结构方案"><a href="#分区结构方案" class="headerlink" title="分区结构方案"></a>分区结构方案</h3><p>UA分区：32MB，Fbinst分区格式。该分区作用为存储引导数据及引导器GRLDR</p><p>Data分区：大小视U盘空间实际大小而定，默认格式化为NTFS格式。此分区用于数据存放，无其他作用。</p><p>EFI分区：1024MB，FAT32格式。此分区用于存储引导数据及启动数据。具有唯一GUID。所以请不要对其进行磁盘操作，否则会造成PE无法启动。</p><h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><h4 id="Legacy启动顺序说明"><a href="#Legacy启动顺序说明" class="headerlink" title="Legacy启动顺序说明"></a>Legacy启动顺序说明</h4><p>BIOS收到指定启动器指令，载入U盘第一个扇区，即位于UA分区的GRLDR引导器。通过识别内嵌代码，指针跳转至EFI分区，寻找位于SkyPE文件夹下的CFG.ini。</p><p>CFG.ini中同样包含着两条重定向启动指针的命令。第一个会让其跳转至999文件夹下的PE.ini文件，该ini文件内包含着两条引导Bootmgr类文件的指令，分别为Core文件夹下的Win10文件和Win8文件。</p><p>Win10将重定向启动指针，使其读取BCD文件中的引导启动数据，（8888下的8PE），使其找到位于SkyPE文件夹下的SkyPE.WIM文件，至此引导过程结束，开始载入PE</p><h4 id="EFI启动顺序说明"><a href="#EFI启动顺序说明" class="headerlink" title="EFI启动顺序说明"></a>EFI启动顺序说明</h4><p>BIOS收到指定启动器说明，寻找U盘上GUID为C12A7328-F81F-11D2-BA4B-00A0C93EC93B的分区（即为EFI分区），并寻找该分区下的\EFI\BOOT\BOOTX64.EFI（64位，32位文件名为BOOTIA32.EFI）。该文件将会在\EFI\MICROSOFT\BOOT文件夹下寻找BCD文件（由于为了让该PE同时支持32位和64位两种启动环境，并且为了让其适用不同启动场景，该文件夹下有两个BCD文件。一个为B32，一个直接叫BCD）从BCD中读取对应数据之后就可以找到对应的Wim文件了。</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>1.重装系统之前一定要保证自己的数据安全。不要忘了备份。</p><p>2.若自行对PE进行修改，请不要格式化EFI分区和UA分区，这会使他们的GUID标识丢失从而无法启动。</p><p>3.禁止将其用于商业目的，否则nmsl。</p><h2 id="关于安装工具"><a href="#关于安装工具" class="headerlink" title="关于安装工具"></a>关于安装工具</h2><p>第一个Setup.exe支持移动硬盘等所有USB存储设备，第二个Setup2.exe作为备用安装程序，只能识别U盘主控的移动存储设备。建议使用第一个工具安装。比较稳。</p><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pan.baidu.com/s/1oT_s5QY0PZnSQ1GkS2WiXQ 提取码: n47j</span><br></pre></td></tr></tbody></table></figure></div><p><a href="https://pan.baidu.com/s/1oT_s5QY0PZnSQ1GkS2WiXQ" target="_blank" rel="noopener">嫌麻烦可以直接点这里然后自行输入提取码</a></p><h2 id="文件信息"><a href="#文件信息" class="headerlink" title="文件信息"></a>文件信息</h2><ul><li>文件名：SkyPE0215.7z</li><li>文件大小：560MB</li><li>SHA1：14103CD25030F838DDEAD0D93CD632C9ACF5B718</li><li>CRC64：AC4B1C84BF7B9776</li></ul><p>/<em>Update in 2020.2.24 10:21 A.M</em>/</p><p>/<em>Author:Skrshadow</em>/</p></body></html>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;SkyOS”-Project-PE说明文档&quot;&gt;&lt;a href=&quot;#SkyOS”-Project-PE说明文档&quot; class=&quot;headerlink&quot; title=&quot;SkyOS” Project PE说明文档&quot;&gt;&lt;/
-      
-    
-    </summary>
-    
-    
-      <category term="Sky Project 分支" scheme="http://www.skrshadow.cn/categories/Sky-Project-%E5%88%86%E6%94%AF/"/>
-    
-    
-      <category term="Source" scheme="http://www.skrshadow.cn/tags/Source/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows7重装报错</title>
-    <link href="http://www.skrshadow.cn/2020/02/17/Win7oobe/"/>
-    <id>http://www.skrshadow.cn/2020/02/17/Win7oobe/</id>
-    <published>2020-02-16T21:29:21.000Z</published>
-    <updated>2020-02-24T02:00:30.358Z</updated>
-    
-    <content type="html"><![CDATA[<html><head></head><body><h1 id="Win7重装过程中出现提示框错误"><a href="#Win7重装过程中出现提示框错误" class="headerlink" title="Win7重装过程中出现提示框错误"></a>Win7重装过程中出现提示框错误</h1><p>有的时候在重装win7系统的时候，会出现一个提示框提示“Windows安装程序无法将Windows配置为在此计算机的硬件上运行”类似错误，常发于Intel第六代处理器之后，和AMD Ryzen系列及同代处理器之后。</p><p>就比如这样：</p><p><a href="https://s2.ax1x.com/2020/02/24/334Dvd.jpg" data-fancybox="group" data-caption="334Dvd.jpg" class="fancybox"><img alt="334Dvd.jpg" data-src="https://s2.ax1x.com/2020/02/24/334Dvd.jpg" class="lazyload" title="334Dvd.jpg"></a></p><p>就这种错误</p><p>而且无论点 确定 还是点 关闭窗口都会重启</p><p>这个时候可以这样操作：</p><ol><li><p>出现该提示框的时候<strong>不要点击关闭窗口</strong>，也<strong>不要点击确定</strong></p></li><li><p>同时按下 shift键 和 F10键<strong>呼出命令提示符窗口</strong> (如果没反应，考虑该电脑是否需要再同时按下FN键才能使用F10键)</p></li><li><p>在命令提示符中输入命令</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd oobe</span><br></pre></td></tr></tbody></table></figure></div><p>注意空格</p><p>，然后按下回车键执行该命令(切换目录)</p></li><li><p>再输入</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msoobe.exe</span><br></pre></td></tr></tbody></table></figure></div><p>然后按下回车键执行该命令启动msoobe程序直接进入win7初始化界面</p></li><li><p>完成后如果还回到错误弹窗界面的话，选择确定，然后重启系统就应该正常了。</p></li></ol><p>/<em>转载自技术部Wiki</em>/</p><p>/<em>其实还有另一种解决方式，明天更新</em>/</p><p>/<em>2020.02.18</em>/</p></body></html>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;Win7重装过程中出现提示框错误&quot;&gt;&lt;a href=&quot;#Win7重装过程中出现提示框错误&quot; class=&quot;headerlink&quot; title=&quot;Win7重装过程中出现提示框错误&quot;&gt;&lt;/a&gt;Win7重装过程中出现提示
-      
-    
-    </summary>
-    
-    
-      <category term="Windows各种折腾" scheme="http://www.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-      <category term="Windows" scheme="http://www.skrshadow.cn/tags/Windows/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Win10卓越性能</title>
-    <link href="http://www.skrshadow.cn/2020/02/17/Superpower/"/>
-    <id>http://www.skrshadow.cn/2020/02/17/Superpower/</id>
-    <published>2020-02-16T21:29:21.000Z</published>
-    <updated>2020-02-24T01:59:10.745Z</updated>
-    
-    <content type="html"><![CDATA[<html><head></head><body><h1 id="Win10卓越性能"><a href="#Win10卓越性能" class="headerlink" title="Win10卓越性能"></a>Win10卓越性能</h1><p>win10卓越性能 电源计划:有点鸡肋的电源计划，会增加耗电量，似乎可以使处理器一直在最高频率运行，在台式机上效果估计明显一丢丢</p><p>1803版本以上的win10系统才可以直接通过命令导入，以往的版本需要下载文件导入</p><p>可以在管理员模式的powershell中 执行命令</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61</span><br></pre></td></tr></tbody></table></figure></div><p>导入 <strong>卓越性能</strong> 电源计划</p><p>成功导入模式后如图:</p><p><a href="http://i1.fuimg.com/709843/436377bbef0a9de1.jpg" target="_blank" rel="noopener"><img alt="SuperPower.jpg" data-src="https://s2.ax1x.com/2020/02/24/334YHx.jpg" class="lazyload"></a></p><p>1803系统可以下载这个文件</p><p><strong><a href="https://pan.baidu.com/s/1RJON0PslAwoDEkQbTqWvUQ" target="_blank" rel="noopener">点这下载</a> 提取码: hqt5</strong></p><p>导入文件命令如下（以放在D盘test文件夹为例）</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powercfg -import D:\test\zyxn.pow</span><br></pre></td></tr></tbody></table></figure></div><p>之后在电源选项里面多出来的那个乱码方案就是卓越性能方案。选定即可生效。</p><p>PS：其实你可以打完powercfg -import （一定要留一个空格）之后直接把要导入的文件拖进来，cmd和powershell会自动帮你引用该文件的位置，直接回车即可执行命令。该技巧在其他在命令窗口引用文件的时候同样适用。</p><p>/<em>转载自技术部Wiki</em>/</p><p>/<em>2020.02.18</em>/</p></body></html>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;Win10卓越性能&quot;&gt;&lt;a href=&quot;#Win10卓越性能&quot; class=&quot;headerlink&quot; title=&quot;Win10卓越性能&quot;&gt;&lt;/a&gt;Win10卓越性能&lt;/h1&gt;&lt;p&gt;win10卓越性能 电源计划:有点
-      
-    
-    </summary>
-    
-    
-      <category term="Windows各种折腾" scheme="http://www.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
-    
-    
-      <category term="Windows" scheme="http://www.skrshadow.cn/tags/Windows/"/>
-    
-  </entry>
-  
-  <entry>
     <title>资源下载汇总</title>
-    <link href="http://www.skrshadow.cn/2020/02/17/Download/"/>
-    <id>http://www.skrshadow.cn/2020/02/17/Download/</id>
+    <link href="http://blog.skrshadow.cn/2020/02/17/Download/"/>
+    <id>http://blog.skrshadow.cn/2020/02/17/Download/</id>
     <published>2020-02-16T21:29:21.000Z</published>
     <updated>2020-02-25T18:35:38.392Z</updated>
     
@@ -139,17 +35,121 @@
     </summary>
     
     
-      <category term="下载站" scheme="http://www.skrshadow.cn/categories/%E4%B8%8B%E8%BD%BD%E7%AB%99/"/>
+      <category term="下载站" scheme="http://blog.skrshadow.cn/categories/%E4%B8%8B%E8%BD%BD%E7%AB%99/"/>
     
     
-      <category term="Download" scheme="http://www.skrshadow.cn/tags/Download/"/>
+      <category term="Download" scheme="http://blog.skrshadow.cn/tags/Download/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>家庭版win10开启组策略组策略</title>
+    <link href="http://blog.skrshadow.cn/2020/02/17/Groupedit/"/>
+    <id>http://blog.skrshadow.cn/2020/02/17/Groupedit/</id>
+    <published>2020-02-16T21:29:21.000Z</published>
+    <updated>2020-02-18T08:14:03.770Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="家庭版win10开启组策略"><a href="#家庭版win10开启组策略" class="headerlink" title="家庭版win10开启组策略"></a>家庭版win10开启组策略</h1><p>组策略对于优化和维护Windows系统来说十分重要</p><p>但是windows家庭版系统并不包含组策略</p><p>通过bat脚本可以开启windows家庭版系统的组策略功能</p><p>方法:</p><p>新建一个文档，将下列内容复制进文档，并保存</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">pushd "%~dp0"</span><br><span class="line">dir /b C:\Windows\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt</span><br><span class="line">dir /b C:\Windows\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt</span><br><span class="line">for /f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"C:\Windows\servicing\Packages\%%i"</span><br><span class="line">pause</span><br></pre></td></tr></tbody></table></figure></div><p>将文档扩展名<strong>.txt</strong> 改为 <strong>.bat</strong></p><p>然后右键以管理员身份运行这个文件</p><p>等待脚本执行完以后</p><p>再运行一下gpedit.msc命令，你就发现组策略能用了</p><p>/<em>转载自技术部Wiki</em>/</p><p>/<em>2020.02.18</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;家庭版win10开启组策略&quot;&gt;&lt;a href=&quot;#家庭版win10开启组策略&quot; class=&quot;headerlink&quot; title=&quot;家庭版win10开启组策略&quot;&gt;&lt;/a&gt;家庭版win10开启组策略&lt;/h1&gt;&lt;p&gt;组
+      
+    
+    </summary>
+    
+    
+      <category term="Windows各种折腾" scheme="http://blog.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+      <category term="Windows" scheme="http://blog.skrshadow.cn/tags/Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SkyPE V4.0 发布</title>
+    <link href="http://blog.skrshadow.cn/2020/02/17/SkyPE4.0/"/>
+    <id>http://blog.skrshadow.cn/2020/02/17/SkyPE4.0/</id>
+    <published>2020-02-16T21:29:21.000Z</published>
+    <updated>2020-02-24T02:21:50.101Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="SkyOS”-Project-PE说明文档"><a href="#SkyOS”-Project-PE说明文档" class="headerlink" title="SkyOS” Project PE说明文档"></a>SkyOS” Project PE说明文档</h1><h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>“SkyOS” PE Project开始于 2018.02.04，原项目为Gho PE合盘项目。基于通用PE工具箱的启动结构进行修改。后来改为Grub4DOS链(wu)式(xian)启(tao)动(wa)结构。基本由三种启动模板组成：直接引导结构，模拟引导结构，桥接引导结构。尝试做一个比较好用的PE。<del>（然而还是没有微PE好用）</del></p><h2 id="本版本PE说明"><a href="#本版本PE说明" class="headerlink" title="本版本PE说明"></a>本版本PE说明</h2><h3 id="PE版本"><a href="#PE版本" class="headerlink" title="PE版本"></a>PE版本</h3><p>SkyPE_V4.0_Full_SK04200104B77LTS</p><h3 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h3><h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><p>Win8XPE添加Dism++和CGI工具，Ghost版本升级，针对EFI-IA32设备添加一些工具。</p><p>UEFI模式引导菜单添加了支持网络的Windows PE</p><p><del>Win10PE（网络支持）添加了一个由于注册表问题引起的StatIsback任务栏黑色且无法调整透明度的Bug</del></p><h4 id="移除"><a href="#移除" class="headerlink" title="移除"></a>移除</h4><p>移除了为Legacy老机器定位的Win8PE。因为能启动这个的老机器基本都能启动现在的10。定位过于鸡肋。</p><p>移除了Grub4DOS引导的Legacy方式安装的Ubuntu。占用空间大，且功能残缺不全。</p><h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p>工具包程序例行升级</p><p>升级列表：Everything Dism++</p><p>改进了引导结构，移除了原Win8PE需要的模拟光驱启动</p><p>原Windows 10 PE（网络支持）重做。大幅缩小体积。</p><p>使用新的压缩算法，每一个Windows Image文件都有不同程度的缩小。</p><h3 id="分区结构方案"><a href="#分区结构方案" class="headerlink" title="分区结构方案"></a>分区结构方案</h3><p>UA分区：32MB，Fbinst分区格式。该分区作用为存储引导数据及引导器GRLDR</p><p>Data分区：大小视U盘空间实际大小而定，默认格式化为NTFS格式。此分区用于数据存放，无其他作用。</p><p>EFI分区：1024MB，FAT32格式。此分区用于存储引导数据及启动数据。具有唯一GUID。所以请不要对其进行磁盘操作，否则会造成PE无法启动。</p><h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><h4 id="Legacy启动顺序说明"><a href="#Legacy启动顺序说明" class="headerlink" title="Legacy启动顺序说明"></a>Legacy启动顺序说明</h4><p>BIOS收到指定启动器指令，载入U盘第一个扇区，即位于UA分区的GRLDR引导器。通过识别内嵌代码，指针跳转至EFI分区，寻找位于SkyPE文件夹下的CFG.ini。</p><p>CFG.ini中同样包含着两条重定向启动指针的命令。第一个会让其跳转至999文件夹下的PE.ini文件，该ini文件内包含着两条引导Bootmgr类文件的指令，分别为Core文件夹下的Win10文件和Win8文件。</p><p>Win10将重定向启动指针，使其读取BCD文件中的引导启动数据，（8888下的8PE），使其找到位于SkyPE文件夹下的SkyPE.WIM文件，至此引导过程结束，开始载入PE</p><h4 id="EFI启动顺序说明"><a href="#EFI启动顺序说明" class="headerlink" title="EFI启动顺序说明"></a>EFI启动顺序说明</h4><p>BIOS收到指定启动器说明，寻找U盘上GUID为C12A7328-F81F-11D2-BA4B-00A0C93EC93B的分区（即为EFI分区），并寻找该分区下的\EFI\BOOT\BOOTX64.EFI（64位，32位文件名为BOOTIA32.EFI）。该文件将会在\EFI\MICROSOFT\BOOT文件夹下寻找BCD文件（由于为了让该PE同时支持32位和64位两种启动环境，并且为了让其适用不同启动场景，该文件夹下有两个BCD文件。一个为B32，一个直接叫BCD）从BCD中读取对应数据之后就可以找到对应的Wim文件了。</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>1.重装系统之前一定要保证自己的数据安全。不要忘了备份。</p><p>2.若自行对PE进行修改，请不要格式化EFI分区和UA分区，这会使他们的GUID标识丢失从而无法启动。</p><p>3.禁止将其用于商业目的，否则nmsl。</p><h2 id="关于安装工具"><a href="#关于安装工具" class="headerlink" title="关于安装工具"></a>关于安装工具</h2><p>第一个Setup.exe支持移动硬盘等所有USB存储设备，第二个Setup2.exe作为备用安装程序，只能识别U盘主控的移动存储设备。建议使用第一个工具安装。比较稳。</p><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pan.baidu.com/s/1oT_s5QY0PZnSQ1GkS2WiXQ 提取码: n47j</span><br></pre></td></tr></tbody></table></figure></div><p><a href="https://pan.baidu.com/s/1oT_s5QY0PZnSQ1GkS2WiXQ" target="_blank" rel="noopener">嫌麻烦可以直接点这里然后自行输入提取码</a></p><h2 id="文件信息"><a href="#文件信息" class="headerlink" title="文件信息"></a>文件信息</h2><ul><li>文件名：SkyPE0215.7z</li><li>文件大小：560MB</li><li>SHA1：14103CD25030F838DDEAD0D93CD632C9ACF5B718</li><li>CRC64：AC4B1C84BF7B9776</li></ul><p>/<em>Update in 2020.2.24 10:21 A.M</em>/</p><p>/<em>Author:Skrshadow</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;SkyOS”-Project-PE说明文档&quot;&gt;&lt;a href=&quot;#SkyOS”-Project-PE说明文档&quot; class=&quot;headerlink&quot; title=&quot;SkyOS” Project PE说明文档&quot;&gt;&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="Sky Project 分支" scheme="http://blog.skrshadow.cn/categories/Sky-Project-%E5%88%86%E6%94%AF/"/>
+    
+    
+      <category term="Source" scheme="http://blog.skrshadow.cn/tags/Source/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows7重装报错</title>
+    <link href="http://blog.skrshadow.cn/2020/02/17/Win7oobe/"/>
+    <id>http://blog.skrshadow.cn/2020/02/17/Win7oobe/</id>
+    <published>2020-02-16T21:29:21.000Z</published>
+    <updated>2020-02-24T02:00:30.358Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="Win7重装过程中出现提示框错误"><a href="#Win7重装过程中出现提示框错误" class="headerlink" title="Win7重装过程中出现提示框错误"></a>Win7重装过程中出现提示框错误</h1><p>有的时候在重装win7系统的时候，会出现一个提示框提示“Windows安装程序无法将Windows配置为在此计算机的硬件上运行”类似错误，常发于Intel第六代处理器之后，和AMD Ryzen系列及同代处理器之后。</p><p>就比如这样：</p><p><a href="https://s2.ax1x.com/2020/02/24/334Dvd.jpg" data-fancybox="group" data-caption="334Dvd.jpg" class="fancybox"><img alt="334Dvd.jpg" data-src="https://s2.ax1x.com/2020/02/24/334Dvd.jpg" class="lazyload" title="334Dvd.jpg"></a></p><p>就这种错误</p><p>而且无论点 确定 还是点 关闭窗口都会重启</p><p>这个时候可以这样操作：</p><ol><li><p>出现该提示框的时候<strong>不要点击关闭窗口</strong>，也<strong>不要点击确定</strong></p></li><li><p>同时按下 shift键 和 F10键<strong>呼出命令提示符窗口</strong> (如果没反应，考虑该电脑是否需要再同时按下FN键才能使用F10键)</p></li><li><p>在命令提示符中输入命令</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd oobe</span><br></pre></td></tr></tbody></table></figure></div><p>注意空格</p><p>，然后按下回车键执行该命令(切换目录)</p></li><li><p>再输入</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msoobe.exe</span><br></pre></td></tr></tbody></table></figure></div><p>然后按下回车键执行该命令启动msoobe程序直接进入win7初始化界面</p></li><li><p>完成后如果还回到错误弹窗界面的话，选择确定，然后重启系统就应该正常了。</p></li></ol><p>/<em>转载自技术部Wiki</em>/</p><p>/<em>其实还有另一种解决方式，明天更新</em>/</p><p>/<em>2020.02.18</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;Win7重装过程中出现提示框错误&quot;&gt;&lt;a href=&quot;#Win7重装过程中出现提示框错误&quot; class=&quot;headerlink&quot; title=&quot;Win7重装过程中出现提示框错误&quot;&gt;&lt;/a&gt;Win7重装过程中出现提示
+      
+    
+    </summary>
+    
+    
+      <category term="Windows各种折腾" scheme="http://blog.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+      <category term="Windows" scheme="http://blog.skrshadow.cn/tags/Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Win10卓越性能</title>
+    <link href="http://blog.skrshadow.cn/2020/02/17/Superpower/"/>
+    <id>http://blog.skrshadow.cn/2020/02/17/Superpower/</id>
+    <published>2020-02-16T21:29:21.000Z</published>
+    <updated>2020-02-24T01:59:10.745Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="Win10卓越性能"><a href="#Win10卓越性能" class="headerlink" title="Win10卓越性能"></a>Win10卓越性能</h1><p>win10卓越性能 电源计划:有点鸡肋的电源计划，会增加耗电量，似乎可以使处理器一直在最高频率运行，在台式机上效果估计明显一丢丢</p><p>1803版本以上的win10系统才可以直接通过命令导入，以往的版本需要下载文件导入</p><p>可以在管理员模式的powershell中 执行命令</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61</span><br></pre></td></tr></tbody></table></figure></div><p>导入 <strong>卓越性能</strong> 电源计划</p><p>成功导入模式后如图:</p><p><a href="http://i1.fuimg.com/709843/436377bbef0a9de1.jpg" target="_blank" rel="noopener"><img alt="SuperPower.jpg" data-src="https://s2.ax1x.com/2020/02/24/334YHx.jpg" class="lazyload"></a></p><p>1803系统可以下载这个文件</p><p><strong><a href="https://pan.baidu.com/s/1RJON0PslAwoDEkQbTqWvUQ" target="_blank" rel="noopener">点这下载</a> 提取码: hqt5</strong></p><p>导入文件命令如下（以放在D盘test文件夹为例）</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powercfg -import D:\test\zyxn.pow</span><br></pre></td></tr></tbody></table></figure></div><p>之后在电源选项里面多出来的那个乱码方案就是卓越性能方案。选定即可生效。</p><p>PS：其实你可以打完powercfg -import （一定要留一个空格）之后直接把要导入的文件拖进来，cmd和powershell会自动帮你引用该文件的位置，直接回车即可执行命令。该技巧在其他在命令窗口引用文件的时候同样适用。</p><p>/<em>转载自技术部Wiki</em>/</p><p>/<em>2020.02.18</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;Win10卓越性能&quot;&gt;&lt;a href=&quot;#Win10卓越性能&quot; class=&quot;headerlink&quot; title=&quot;Win10卓越性能&quot;&gt;&lt;/a&gt;Win10卓越性能&lt;/h1&gt;&lt;p&gt;win10卓越性能 电源计划:有点
+      
+    
+    </summary>
+    
+    
+      <category term="Windows各种折腾" scheme="http://blog.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+    
+    
+      <category term="Windows" scheme="http://blog.skrshadow.cn/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>SkyOS V1803 PW 发布</title>
-    <link href="http://www.skrshadow.cn/2020/02/15/SkyOS2.0/"/>
-    <id>http://www.skrshadow.cn/2020/02/15/SkyOS2.0/</id>
+    <link href="http://blog.skrshadow.cn/2020/02/15/SkyOS2.0/"/>
+    <id>http://blog.skrshadow.cn/2020/02/15/SkyOS2.0/</id>
     <published>2020-02-14T21:29:21.000Z</published>
     <updated>2020-02-24T02:23:10.765Z</updated>
     
@@ -165,17 +165,17 @@
     </summary>
     
     
-      <category term="Sky Project 分支" scheme="http://www.skrshadow.cn/categories/Sky-Project-%E5%88%86%E6%94%AF/"/>
+      <category term="Sky Project 分支" scheme="http://blog.skrshadow.cn/categories/Sky-Project-%E5%88%86%E6%94%AF/"/>
     
     
-      <category term="Source" scheme="http://www.skrshadow.cn/tags/Source/"/>
+      <category term="Source" scheme="http://blog.skrshadow.cn/tags/Source/"/>
     
   </entry>
   
   <entry>
     <title>Windows10 数字激活原理</title>
-    <link href="http://www.skrshadow.cn/2019/12/11/DigitalLicense/"/>
-    <id>http://www.skrshadow.cn/2019/12/11/DigitalLicense/</id>
+    <link href="http://blog.skrshadow.cn/2019/12/11/DigitalLicense/"/>
+    <id>http://blog.skrshadow.cn/2019/12/11/DigitalLicense/</id>
     <published>2019-12-10T17:51:21.000Z</published>
     <updated>2020-02-24T01:57:42.654Z</updated>
     
@@ -191,17 +191,17 @@
     </summary>
     
     
-      <category term="Windows各种折腾" scheme="http://www.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+      <category term="Windows各种折腾" scheme="http://blog.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
     
     
-      <category term="Windows" scheme="http://www.skrshadow.cn/tags/Windows/"/>
+      <category term="Windows" scheme="http://blog.skrshadow.cn/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>磁盘分区表介绍</title>
-    <link href="http://www.skrshadow.cn/2019/12/11/Disk/"/>
-    <id>http://www.skrshadow.cn/2019/12/11/Disk/</id>
+    <link href="http://blog.skrshadow.cn/2019/12/11/Disk/"/>
+    <id>http://blog.skrshadow.cn/2019/12/11/Disk/</id>
     <published>2019-12-10T17:38:21.000Z</published>
     <updated>2020-02-18T08:15:03.129Z</updated>
     
@@ -217,17 +217,17 @@
     </summary>
     
     
-      <category term="知识类文章" scheme="http://www.skrshadow.cn/categories/%E7%9F%A5%E8%AF%86%E7%B1%BB%E6%96%87%E7%AB%A0/"/>
+      <category term="知识类文章" scheme="http://blog.skrshadow.cn/categories/%E7%9F%A5%E8%AF%86%E7%B1%BB%E6%96%87%E7%AB%A0/"/>
     
     
-      <category term="Windows" scheme="http://www.skrshadow.cn/tags/Windows/"/>
+      <category term="Windows" scheme="http://blog.skrshadow.cn/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>底层刷机教程</title>
-    <link href="http://www.skrshadow.cn/2019/11/30/9008Flash/"/>
-    <id>http://www.skrshadow.cn/2019/11/30/9008Flash/</id>
+    <link href="http://blog.skrshadow.cn/2019/11/30/9008Flash/"/>
+    <id>http://blog.skrshadow.cn/2019/11/30/9008Flash/</id>
     <published>2019-11-29T18:16:21.000Z</published>
     <updated>2020-02-18T08:12:30.534Z</updated>
     
@@ -243,17 +243,17 @@
     </summary>
     
     
-      <category term="移动设备" scheme="http://www.skrshadow.cn/categories/%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87/"/>
+      <category term="移动设备" scheme="http://blog.skrshadow.cn/categories/%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87/"/>
     
     
-      <category term="Android" scheme="http://www.skrshadow.cn/tags/Android/"/>
+      <category term="Android" scheme="http://blog.skrshadow.cn/tags/Android/"/>
     
   </entry>
   
   <entry>
     <title>Windows Defender 移除方法</title>
-    <link href="http://www.skrshadow.cn/2019/11/15/Defender/"/>
-    <id>http://www.skrshadow.cn/2019/11/15/Defender/</id>
+    <link href="http://blog.skrshadow.cn/2019/11/15/Defender/"/>
+    <id>http://blog.skrshadow.cn/2019/11/15/Defender/</id>
     <published>2019-11-15T07:43:21.000Z</published>
     <updated>2020-02-18T08:14:12.754Z</updated>
     
@@ -269,17 +269,17 @@
     </summary>
     
     
-      <category term="Windows各种折腾" scheme="http://www.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
+      <category term="Windows各种折腾" scheme="http://blog.skrshadow.cn/categories/Windows%E5%90%84%E7%A7%8D%E6%8A%98%E8%85%BE/"/>
     
     
-      <category term="Windows" scheme="http://www.skrshadow.cn/tags/Windows/"/>
+      <category term="Windows" scheme="http://blog.skrshadow.cn/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>Grub4DOS命令索引</title>
-    <link href="http://www.skrshadow.cn/2019/11/15/Grub4DOS/"/>
-    <id>http://www.skrshadow.cn/2019/11/15/Grub4DOS/</id>
+    <link href="http://blog.skrshadow.cn/2019/11/15/Grub4DOS/"/>
+    <id>http://blog.skrshadow.cn/2019/11/15/Grub4DOS/</id>
     <published>2019-11-15T07:07:21.000Z</published>
     <updated>2020-02-18T08:15:53.231Z</updated>
     
@@ -295,17 +295,17 @@
     </summary>
     
     
-      <category term="“SkyPE” Project 相关" scheme="http://www.skrshadow.cn/categories/%E2%80%9CSkyPE%E2%80%9D-Project-%E7%9B%B8%E5%85%B3/"/>
+      <category term="“SkyPE” Project 相关" scheme="http://blog.skrshadow.cn/categories/%E2%80%9CSkyPE%E2%80%9D-Project-%E7%9B%B8%E5%85%B3/"/>
     
     
-      <category term="PE" scheme="http://www.skrshadow.cn/tags/PE/"/>
+      <category term="PE" scheme="http://blog.skrshadow.cn/tags/PE/"/>
     
   </entry>
   
   <entry>
     <title>刷机教程</title>
-    <link href="http://www.skrshadow.cn/2019/11/07/Flash/"/>
-    <id>http://www.skrshadow.cn/2019/11/07/Flash/</id>
+    <link href="http://blog.skrshadow.cn/2019/11/07/Flash/"/>
+    <id>http://blog.skrshadow.cn/2019/11/07/Flash/</id>
     <published>2019-11-07T00:26:21.000Z</published>
     <updated>2020-02-19T04:30:11.694Z</updated>
     
@@ -321,17 +321,17 @@
     </summary>
     
     
-      <category term="移动设备" scheme="http://www.skrshadow.cn/categories/%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87/"/>
+      <category term="移动设备" scheme="http://blog.skrshadow.cn/categories/%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87/"/>
     
     
-      <category term="Android" scheme="http://www.skrshadow.cn/tags/Android/"/>
+      <category term="Android" scheme="http://blog.skrshadow.cn/tags/Android/"/>
     
   </entry>
   
   <entry>
     <title>主机配置清单</title>
-    <link href="http://www.skrshadow.cn/2019/06/17/Hardware/"/>
-    <id>http://www.skrshadow.cn/2019/06/17/Hardware/</id>
+    <link href="http://blog.skrshadow.cn/2019/06/17/Hardware/"/>
+    <id>http://blog.skrshadow.cn/2019/06/17/Hardware/</id>
     <published>2019-06-17T05:20:58.000Z</published>
     <updated>2020-02-25T18:20:30.017Z</updated>
     
@@ -347,17 +347,17 @@
     </summary>
     
     
-      <category term="随笔" scheme="http://www.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://blog.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="扯犊子" scheme="http://www.skrshadow.cn/tags/%E6%89%AF%E7%8A%8A%E5%AD%90/"/>
+      <category term="扯犊子" scheme="http://blog.skrshadow.cn/tags/%E6%89%AF%E7%8A%8A%E5%AD%90/"/>
     
   </entry>
   
   <entry>
     <title>Sky Project 项目说明</title>
-    <link href="http://www.skrshadow.cn/2017/07/07/SkyProj/"/>
-    <id>http://www.skrshadow.cn/2017/07/07/SkyProj/</id>
+    <link href="http://blog.skrshadow.cn/2017/07/07/SkyProj/"/>
+    <id>http://blog.skrshadow.cn/2017/07/07/SkyProj/</id>
     <published>2017-07-07T15:29:21.000Z</published>
     <updated>2020-02-25T18:20:10.731Z</updated>
     
@@ -373,10 +373,10 @@
     </summary>
     
     
-      <category term="随笔" scheme="http://www.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://blog.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="扯犊子" scheme="http://www.skrshadow.cn/tags/%E6%89%AF%E7%8A%8A%E5%AD%90/"/>
+      <category term="扯犊子" scheme="http://blog.skrshadow.cn/tags/%E6%89%AF%E7%8A%8A%E5%AD%90/"/>
     
   </entry>
   
