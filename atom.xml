@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.skrshadow.cn/"/>
-  <updated>2020-03-18T03:28:38.893Z</updated>
+  <updated>2020-03-21T17:28:45.308Z</updated>
   <id>http://blog.skrshadow.cn/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SkyPE V4.0322 更新</title>
+    <link href="http://blog.skrshadow.cn/2020/03/22/SkyPE0322/"/>
+    <id>http://blog.skrshadow.cn/2020/03/22/SkyPE0322/</id>
+    <published>2020-03-21T17:28:50.000Z</published>
+    <updated>2020-03-21T17:28:45.308Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="“SkyOS”-Project-PE说明文档"><a href="#“SkyOS”-Project-PE说明文档" class="headerlink" title="“SkyOS” Project PE说明文档"></a>“SkyOS” Project PE说明文档</h1><h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>“SkyOS” PE Project开始于 2018.02.04，原项目为Gho PE合盘项目。基于通用PE工具箱的启动结构进行修改。后来改为Grub4DOS链(wu)式(xian)启(tao)动(wa)结构。基本由三种启动模板组成：直接引导结构，模拟引导结构，桥接引导结构。尝试做一个比较好用的PE。<del>（然而还是没有微PE好用）</del></p><h2 id="本版本PE说明"><a href="#本版本PE说明" class="headerlink" title="本版本PE说明"></a>本版本PE说明</h2><h3 id="PE版本"><a href="#PE版本" class="headerlink" title="PE版本"></a>PE版本</h3><p>SkyPE_V4.0_Full_SK04200104B77LTSD0322</p><h3 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h3><h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><p>对BIOS的修改工具</p><p>包括：AMIbcp，Camlogo，MMtool，HXD十六进制编辑工具，以及万能一键备份BIOS工具</p><p>添加AIDA64，EasyBCD，CDI磁盘检测工具</p><p>网络支持版除了以上，还添加了向日葵远控工具（正在解决PE下Teamviewer玄学抽风问题）</p><h4 id="移除"><a href="#移除" class="headerlink" title="移除"></a>移除</h4><p>这次没有移除任何东西，但是估计下几次更新就要做减法了。</p><h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p>移植了Windows8PE的Legacy引导修复工具到Win10两个版本PE，主要是发现很多人真的不会用Dism++….我也很绝望啊。</p><p>稳定性改进。NVME驱动在z97板子上玄学蓝屏问题解决。</p><h3 id="分区结构方案"><a href="#分区结构方案" class="headerlink" title="分区结构方案"></a>分区结构方案</h3><p>UA分区：32MB，Fbinst分区格式。该分区作用为存储引导数据及引导器GRLDR</p><p>Data分区：大小视U盘空间实际大小而定，默认格式化为NTFS格式。此分区用于数据存放，无其他作用。</p><p>EFI分区：1024MB，FAT32格式。此分区用于存储引导数据及启动数据。具有唯一GUID。所以请不要对其进行磁盘操作，否则会造成PE无法启动。</p><h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><h4 id="Legacy启动顺序说明"><a href="#Legacy启动顺序说明" class="headerlink" title="Legacy启动顺序说明"></a>Legacy启动顺序说明</h4><p>BIOS收到指定启动器指令，载入U盘第一个扇区，即位于UA分区的GRLDR引导器。通过识别内嵌代码，指针跳转至EFI分区，寻找位于SkyPE文件夹下的CFG.ini。</p><p>CFG.ini中同样包含着两条重定向启动指针的命令。第一个会让其跳转至999文件夹下的PE.ini文件，该ini文件内包含着两条引导Bootmgr类文件的指令，分别为Core文件夹下的Win10文件和Win8文件。</p><p>Win10将重定向启动指针，使其读取BCD文件中的引导启动数据，（8888下的8PE），使其找到位于SkyPE文件夹下的SkyPE.WIM文件，至此引导过程结束，开始载入PE</p><h4 id="EFI启动顺序说明"><a href="#EFI启动顺序说明" class="headerlink" title="EFI启动顺序说明"></a>EFI启动顺序说明</h4><p>BIOS收到指定启动器说明，寻找U盘上GUID为C12A7328-F81F-11D2-BA4B-00A0C93EC93B的分区（即为EFI分区），并寻找该分区下的\EFI\BOOT\BOOTX64.EFI（64位，32位文件名为BOOTIA32.EFI）。该文件将会在\EFI\MICROSOFT\BOOT文件夹下寻找BCD文件（由于为了让该PE同时支持32位和64位两种启动环境，并且为了让其适用不同启动场景，该文件夹下有两个BCD文件。一个为B32，一个直接叫BCD）从BCD中读取对应数据之后就可以找到对应的Wim文件了。</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>1.重装系统之前一定要保证自己的数据安全。不要忘了备份。</p><p>2.若自行对PE进行修改，请不要格式化EFI分区和UA分区，这会使他们的GUID标识丢失从而无法启动。</p><p>3.禁止将其用于商业目的，否则nmsl。</p><h2 id="关于安装工具"><a href="#关于安装工具" class="headerlink" title="关于安装工具"></a>关于安装工具</h2><p>第一个Setup.exe支持移动硬盘等所有USB存储设备，第二个Setup2.exe作为备用安装程序，只能识别U盘主控的移动存储设备。建议使用第一个工具安装。比较稳。</p><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pan.baidu.com/s/1-thgfjFGFBpvYIMF40sP_g 提取码：flfw</span><br></pre></td></tr></tbody></table></figure></div><p><a href="https://pan.baidu.com/s/1-thgfjFGFBpvYIMF40sP_g" target="_blank" rel="noopener">嫌麻烦可以直接点这里然后自行输入提取码</a></p><h2 id="文件信息"><a href="#文件信息" class="headerlink" title="文件信息"></a>文件信息</h2><ul><li>文件名：SkyPE0322.7z</li><li>文件大小：962MB</li><li>SHA1：BA012A7F1F6E368A7367B4AC5540FC715A5F973D</li><li>CRC64：B44837D718BA86C7</li></ul><h2 id="疑惑但不说-jpg"><a href="#疑惑但不说-jpg" class="headerlink" title="疑惑但不说.jpg"></a>疑惑但不说.jpg</h2><p>LZMA2压缩可能是我配置不对？？怎么文件大小像吹气球一样。。。找到问题会重压上传。目前这个包也能用emmm，就是将近1GB，难顶。</p><p>/<em>Update in 2020.3.22 0:55 A.M</em>/</p><p>/<em>Author:Skrshadow</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;“SkyOS”-Project-PE说明文档&quot;&gt;&lt;a href=&quot;#“SkyOS”-Project-PE说明文档&quot; class=&quot;headerlink&quot; title=&quot;“SkyOS” Project PE说明文档&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="Sky Project 分支" scheme="http://blog.skrshadow.cn/categories/Sky-Project-%E5%88%86%E6%94%AF/"/>
+    
+    
+      <category term="Source" scheme="http://blog.skrshadow.cn/tags/Source/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SkyOS Win7</title>
+    <link href="http://blog.skrshadow.cn/2020/03/22/GhostOS/"/>
+    <id>http://blog.skrshadow.cn/2020/03/22/GhostOS/</id>
+    <published>2020-03-21T17:28:48.000Z</published>
+    <updated>2020-03-21T17:28:14.689Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="“SkyOS”-Project-封装项目"><a href="#“SkyOS”-Project-封装项目" class="headerlink" title="“SkyOS” Project 封装项目"></a>“SkyOS” Project 封装项目</h1><h2 id="重要的事情说三遍"><a href="#重要的事情说三遍" class="headerlink" title="重要的事情说三遍"></a>重要的事情说三遍</h2><p><strong>重做系统一定别忘了备份数据！</strong></p><p><strong>重做系统一定别忘了备份数据！</strong></p><p><strong>重做系统一定别忘了备份数据！</strong></p><h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>2014年开始的Windows7封装计划，最后一个版本是2015年末的版本，还是Ghost封装的就很顶。</p><h2 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h2><p>SkyOS 1.5 7U</p><h2 id="底包版本"><a href="#底包版本" class="headerlink" title="底包版本"></a>底包版本</h2><p>Windows 7 Ultimate SP1</p><h2 id="预置应用"><a href="#预置应用" class="headerlink" title="预置应用"></a>预置应用</h2><p>Bandzip</p><p>QQ拼音输入法纯净版</p><h2 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h2><p>系统更新打到Windows7断更的那一天（大概）</p><p>也没啥可说的。大概以后会给这个东西折腾一个更新树。等我SkyOS的Android定制出来的吧emmm</p><p><del>配合SkyPE4.0食用风味更佳（小声bb）</del></p><h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a><strong>注释</strong></h2><p><strong>该版本可以在8，9代Intel，以及Ryzen新硬件平台以及NVME固态上安装使用。理论自带网卡驱动，但是以防万一建议下载一个360驱动大师网卡版。</strong></p><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pan.baidu.com/s/13B-0LygcF4-hYAREASmYEg 提取码: 3ngm</span><br></pre></td></tr></tbody></table></figure></div><p><a href="https://pan.baidu.com/s/13B-0LygcF4-hYAREASmYEg" target="_blank" rel="noopener">嫌麻烦可以直接点这里然后自行输入提取码</a></p><h2 id="文件信息"><a href="#文件信息" class="headerlink" title="文件信息"></a>文件信息</h2><ul><li>文件名：Windows7Beta.esd</li><li>文件大小：1.86GB</li><li>SHA1：BC89BA4EFDF3692A15792337168BF4B2EC0A5EE2</li><li>CRC64：26B8FBF1D1743759</li></ul><p>/<em>Author Skrshadow 2020.2.24</em>/</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;“SkyOS”-Project-封装项目&quot;&gt;&lt;a href=&quot;#“SkyOS”-Project-封装项目&quot; class=&quot;headerlink&quot; title=&quot;“SkyOS” Project 封装项目&quot;&gt;&lt;/a&gt;“
+      
+    
+    </summary>
+    
+    
+      <category term="Sky Project 分支" scheme="http://blog.skrshadow.cn/categories/Sky-Project-%E5%88%86%E6%94%AF/"/>
+    
+    
+      <category term="Source" scheme="http://blog.skrshadow.cn/tags/Source/"/>
+    
+  </entry>
   
   <entry>
     <title>SkyOS V1.1P 重制项目</title>
@@ -456,32 +508,6 @@
     
     
       <category term="杂七杂八的东西" scheme="http://blog.skrshadow.cn/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E7%9A%84%E4%B8%9C%E8%A5%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>提问的方式</title>
-    <link href="http://blog.skrshadow.cn/2017/07/07/Asksth/"/>
-    <id>http://blog.skrshadow.cn/2017/07/07/Asksth/</id>
-    <published>2017-07-07T15:29:21.000Z</published>
-    <updated>2020-03-06T18:15:27.914Z</updated>
-    
-    <content type="html"><![CDATA[<html><head></head><body><h1 id="别像弱智一样提问"><a href="#别像弱智一样提问" class="headerlink" title="别像弱智一样提问"></a>别像弱智一样提问</h1><h2 id="你真的准备好了吗？"><a href="#你真的准备好了吗？" class="headerlink" title="你真的准备好了吗？"></a>你真的准备好了吗？</h2><p><a href="/img/you-are-not-prepared.png" data-fancybox="group" data-caption="you-are-not-prepared.png" class="fancybox"><img alt="you-are-not-prepared.png" title="you-are-not-prepared.png" data-src="/img/you-are-not-prepared.png" src="/img/loading.gif" class="lazyload"></a></p><blockquote><p>感谢群友 <code>for you</code> 提供</p></blockquote><h2 id="提问前你必须需要知道的事情"><a href="#提问前你必须需要知道的事情" class="headerlink" title="提问前你必须需要知道的事情"></a>提问前你必须需要知道的事情</h2><ol><li>要知道， <code>Free</code> 的正确翻译是 <code>自由</code>，而非 <strong><del><code>免费</code></del></strong>。</li><li>要知道，愿意回答问题的人，都是 <strong>可爱</strong> 的人。</li><li>要知道，向帮助你的人 <code>付费</code> 是一个高尚的行为。即使回答你的人不是为了钱。</li><li>要知道，<code>花钱买时间一个是常识</code>。如果你不能认同，要么你钱包穷，要么你思想穷。</li><li>要知道，给对方发工资的不是你或者你老板。</li><li>要知道，提问的时候你才是 <strong>孙子</strong>，帮助你的人是 <strong>大爷</strong>。</li><li>要知道，不回答你的问题对其他人没有任何损失。</li><li>要知道，<code>准确描述一件事情</code>是一项基本生存技能。要学会提问的智慧</li><li>要知道，<code>搜索</code>是一项基本生存技能，学不会用 Google 的话，你可能真的不适合你所从事的行业。</li><li>要知道，<code>英文</code>是一项基本生存技能，不认识英文的话，你可能真的不适合你所从事的行业。</li></ol><h2 id="幼儿园的小朋友都知道要有礼貌"><a href="#幼儿园的小朋友都知道要有礼貌" class="headerlink" title="幼儿园的小朋友都知道要有礼貌"></a>幼儿园的小朋友都知道要有礼貌</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">请问</span><br><span class="line">  ...问题描述...</span><br><span class="line">谢谢</span><br></pre></td></tr></tbody></table></figure></div><p><a href="/img/manners-maketh-man-small.png" data-fancybox="group" data-caption="manners-maketh-man.jpg" class="fancybox"><img alt="manners-maketh-man.jpg" title="manners-maketh-man.jpg" data-src="/img/manners-maketh-man-small.png" src="/img/loading.gif" class="lazyload"></a></p><h2 id="学会描述问题"><a href="#学会描述问题" class="headerlink" title="学会描述问题"></a>学会描述问题</h2><blockquote><p>向别人提问的时候，要学会正确的描述问题。<br>把对方当成你的老板，你在给他提做报告。要用最精炼的文字和图片，向对方阐述明白一个事情的来龙去脉。</p></blockquote><blockquote><p><strong>要知道，你不是我追的妹子，我没有时间来猜你想要什么。</strong></p></blockquote><blockquote><p>记住，给别人的条件越多，你的问题解决越快。因为这不是解密游戏。</p></blockquote><ol><li>请问一个关于 <code>什么</code> 的问题。</li><li>我想要达到 <code>什么样</code> 效果，但是我这样做出现了 <code>什么样</code> 的问题。</li><li>报错日志是 <code>这样</code> 的。（要 <code>学会</code> 画关键字）</li><li>我尝试过 <code>什么</code> 方法来解决。</li><li>我尝试搜索过了 <code>什么</code> 关键字，在里面找到了 <code>这些 URL</code> 的回答，尝试了还是没有解决问题。</li><li>我用的是 <code>什么</code> 操作系统，版本号是多少。</li><li>我用的是 <code>什么</code> 软件，版本号是多少。</li><li>谢谢</li></ol><blockquote><p>千万别认为只有别人帮助你之后才需要说 <code>谢谢</code>。</p></blockquote><h3 id="学会什么时候贴图"><a href="#学会什么时候贴图" class="headerlink" title="学会什么时候贴图"></a>学会什么时候贴图</h3><p><a href="/img/what-time-to-use-image.png" data-fancybox="group" data-caption="what-time-to-use-image.png" class="fancybox"><img alt="what-time-to-use-image.png" title="what-time-to-use-image.png" data-src="/img/what-time-to-use-image.png" src="/img/loading.gif" class="lazyload"></a></p><p>像这种，IM 自动转义表情，贴出来的问题全是表情。</p><h3 id="学会什么时候要圈出重点"><a href="#学会什么时候要圈出重点" class="headerlink" title="学会什么时候要圈出重点"></a>学会什么时候要圈出重点</h3><p>千万不要认为别人的频率和你是同步的，然后像这样扔出一张图一个表情就了事了。</p><p>在工作中， 你<code>@</code>的人可能会多问一句什么情况。 但是在 IM 聊天群里面，就没有这么好运气了。</p><p><a href="/img/stupid_questions/stupid_02-conversation.png" data-fancybox="group" data-caption="stupid_02-conversation.png" class="fancybox"><img alt="stupid_02-conversation.png" title="stupid_02-conversation.png" data-src="/img/stupid_questions/stupid_02-conversation.png" src="/img/loading.gif" class="lazyload"></a></p><p>如下很难吗？</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@xxx，我这边访问不了 git 仓库。</span><br><span class="line">环境是: 环境是什么。</span><br></pre></td></tr></tbody></table></figure></div><p><a href="/img/stupid_questions/stupid_02-no-target.png" data-fancybox="group" data-caption="stupid_02-no-target.png" class="fancybox"><img alt="stupid_02-no-target.png" title="stupid_02-no-target.png" data-src="/img/stupid_questions/stupid_02-no-target.png" src="/img/loading.gif" class="lazyload"></a></p><h3 id="学会什么时候贴文字"><a href="#学会什么时候贴文字" class="headerlink" title="学会什么时候贴文字"></a>学会什么时候贴文字</h3><h2 id="什么是弱智一样的提问"><a href="#什么是弱智一样的提问" class="headerlink" title="什么是弱智一样的提问"></a>什么是弱智一样的提问</h2><p><a href="/img/stupid_questions/stupid_questions.png" data-fancybox="group" data-caption="stupid_questions.png" class="fancybox"><img alt="stupid_questions.png" title="stupid_questions.png" data-src="/img/stupid_questions/stupid_questions.png" src="/img/loading.gif" class="lazyload"></a></p><h2 id="萌新滚粗"><a href="#萌新滚粗" class="headerlink" title="萌新滚粗"></a>萌新滚粗</h2><p><a href="/img/baiduit.jpg" data-fancybox="group" data-caption="baiduit.jpg" class="fancybox"><img alt="baiduit.jpg" title="baiduit.jpg" data-src="/img/baiduit.jpg" src="/img/loading.gif" class="lazyload"></a></p><table><thead><tr><th>什么鬼？</th><th>咋回事？</th><th>怎么办？</th><th>救命啊！！</th></tr></thead><tbody><tr><td>自己 google</td><td>自己 google</td><td>自己 google</td><td>自己 google 了吗</td></tr></tbody></table><p><a href="/img/googleit.png" data-fancybox="group" data-caption="googleit.png" class="fancybox"><img alt="googleit.png" title="googleit.png" data-src="/img/googleit.png" src="/img/loading.gif" class="lazyload"></a></p><p>/<em>搬运自<a href="https://github.com/dogfight360/Stop-Ask-Questions-The-Stupid-Ways" target="_blank" rel="noopener">这里</a></em>/</p><p>/<em>2020.03.07</em>/</p></body></html>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;别像弱智一样提问&quot;&gt;&lt;a href=&quot;#别像弱智一样提问&quot; class=&quot;headerlink&quot; title=&quot;别像弱智一样提问&quot;&gt;&lt;/a&gt;别像弱智一样提问&lt;/h1&gt;&lt;h2 id=&quot;你真的准备好了吗？&quot;&gt;&lt;a hr
-      
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="http://blog.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="扯犊子" scheme="http://blog.skrshadow.cn/tags/%E6%89%AF%E7%8A%8A%E5%AD%90/"/>
     
   </entry>
   
