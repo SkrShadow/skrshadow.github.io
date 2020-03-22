@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.skrshadow.cn/"/>
-  <updated>2020-03-21T17:28:45.308Z</updated>
+  <updated>2020-03-22T14:14:35.392Z</updated>
   <id>http://blog.skrshadow.cn/</id>
   
   <author>
@@ -20,16 +20,42 @@
     <title>SkyPE V4.0322 更新</title>
     <link href="http://blog.skrshadow.cn/2020/03/22/SkyPE0322/"/>
     <id>http://blog.skrshadow.cn/2020/03/22/SkyPE0322/</id>
-    <published>2020-03-21T17:28:50.000Z</published>
-    <updated>2020-03-21T17:28:45.308Z</updated>
+    <published>2020-03-22T14:28:50.000Z</published>
+    <updated>2020-03-22T14:14:35.392Z</updated>
     
-    <content type="html"><![CDATA[<html><head></head><body><h1 id="“SkyOS”-Project-PE说明文档"><a href="#“SkyOS”-Project-PE说明文档" class="headerlink" title="“SkyOS” Project PE说明文档"></a>“SkyOS” Project PE说明文档</h1><h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>“SkyOS” PE Project开始于 2018.02.04，原项目为Gho PE合盘项目。基于通用PE工具箱的启动结构进行修改。后来改为Grub4DOS链(wu)式(xian)启(tao)动(wa)结构。基本由三种启动模板组成：直接引导结构，模拟引导结构，桥接引导结构。尝试做一个比较好用的PE。<del>（然而还是没有微PE好用）</del></p><h2 id="本版本PE说明"><a href="#本版本PE说明" class="headerlink" title="本版本PE说明"></a>本版本PE说明</h2><h3 id="PE版本"><a href="#PE版本" class="headerlink" title="PE版本"></a>PE版本</h3><p>SkyPE_V4.0_Full_SK04200104B77LTSD0322</p><h3 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h3><h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><p>对BIOS的修改工具</p><p>包括：AMIbcp，Camlogo，MMtool，HXD十六进制编辑工具，以及万能一键备份BIOS工具</p><p>添加AIDA64，EasyBCD，CDI磁盘检测工具</p><p>网络支持版除了以上，还添加了向日葵远控工具（正在解决PE下Teamviewer玄学抽风问题）</p><h4 id="移除"><a href="#移除" class="headerlink" title="移除"></a>移除</h4><p>这次没有移除任何东西，但是估计下几次更新就要做减法了。</p><h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p>移植了Windows8PE的Legacy引导修复工具到Win10两个版本PE，主要是发现很多人真的不会用Dism++….我也很绝望啊。</p><p>稳定性改进。NVME驱动在z97板子上玄学蓝屏问题解决。</p><h3 id="分区结构方案"><a href="#分区结构方案" class="headerlink" title="分区结构方案"></a>分区结构方案</h3><p>UA分区：32MB，Fbinst分区格式。该分区作用为存储引导数据及引导器GRLDR</p><p>Data分区：大小视U盘空间实际大小而定，默认格式化为NTFS格式。此分区用于数据存放，无其他作用。</p><p>EFI分区：1024MB，FAT32格式。此分区用于存储引导数据及启动数据。具有唯一GUID。所以请不要对其进行磁盘操作，否则会造成PE无法启动。</p><h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><h4 id="Legacy启动顺序说明"><a href="#Legacy启动顺序说明" class="headerlink" title="Legacy启动顺序说明"></a>Legacy启动顺序说明</h4><p>BIOS收到指定启动器指令，载入U盘第一个扇区，即位于UA分区的GRLDR引导器。通过识别内嵌代码，指针跳转至EFI分区，寻找位于SkyPE文件夹下的CFG.ini。</p><p>CFG.ini中同样包含着两条重定向启动指针的命令。第一个会让其跳转至999文件夹下的PE.ini文件，该ini文件内包含着两条引导Bootmgr类文件的指令，分别为Core文件夹下的Win10文件和Win8文件。</p><p>Win10将重定向启动指针，使其读取BCD文件中的引导启动数据，（8888下的8PE），使其找到位于SkyPE文件夹下的SkyPE.WIM文件，至此引导过程结束，开始载入PE</p><h4 id="EFI启动顺序说明"><a href="#EFI启动顺序说明" class="headerlink" title="EFI启动顺序说明"></a>EFI启动顺序说明</h4><p>BIOS收到指定启动器说明，寻找U盘上GUID为C12A7328-F81F-11D2-BA4B-00A0C93EC93B的分区（即为EFI分区），并寻找该分区下的\EFI\BOOT\BOOTX64.EFI（64位，32位文件名为BOOTIA32.EFI）。该文件将会在\EFI\MICROSOFT\BOOT文件夹下寻找BCD文件（由于为了让该PE同时支持32位和64位两种启动环境，并且为了让其适用不同启动场景，该文件夹下有两个BCD文件。一个为B32，一个直接叫BCD）从BCD中读取对应数据之后就可以找到对应的Wim文件了。</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>1.重装系统之前一定要保证自己的数据安全。不要忘了备份。</p><p>2.若自行对PE进行修改，请不要格式化EFI分区和UA分区，这会使他们的GUID标识丢失从而无法启动。</p><p>3.禁止将其用于商业目的，否则nmsl。</p><h2 id="关于安装工具"><a href="#关于安装工具" class="headerlink" title="关于安装工具"></a>关于安装工具</h2><p>第一个Setup.exe支持移动硬盘等所有USB存储设备，第二个Setup2.exe作为备用安装程序，只能识别U盘主控的移动存储设备。建议使用第一个工具安装。比较稳。</p><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pan.baidu.com/s/1-thgfjFGFBpvYIMF40sP_g 提取码：flfw</span><br></pre></td></tr></tbody></table></figure></div><p><a href="https://pan.baidu.com/s/1-thgfjFGFBpvYIMF40sP_g" target="_blank" rel="noopener">嫌麻烦可以直接点这里然后自行输入提取码</a></p><h2 id="文件信息"><a href="#文件信息" class="headerlink" title="文件信息"></a>文件信息</h2><ul><li>文件名：SkyPE0322.7z</li><li>文件大小：962MB</li><li>SHA1：BA012A7F1F6E368A7367B4AC5540FC715A5F973D</li><li>CRC64：B44837D718BA86C7</li></ul><h2 id="疑惑但不说-jpg"><a href="#疑惑但不说-jpg" class="headerlink" title="疑惑但不说.jpg"></a>疑惑但不说.jpg</h2><p>LZMA2压缩可能是我配置不对？？怎么文件大小像吹气球一样。。。找到问题会重压上传。目前这个包也能用emmm，就是将近1GB，难顶。</p><p>/<em>Update in 2020.3.22 0:55 A.M</em>/</p><p>/<em>Author:Skrshadow</em>/</p></body></html>]]></content>
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="“SkyOS”-Project-PE说明文档"><a href="#“SkyOS”-Project-PE说明文档" class="headerlink" title="“SkyOS” Project PE说明文档"></a>“SkyOS” Project PE说明文档</h1><h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>“SkyOS” PE Project开始于 2018.02.04，原项目为Gho PE合盘项目。基于通用PE工具箱的启动结构进行修改。后来改为Grub4DOS链(wu)式(xian)启(tao)动(wa)结构。基本由三种启动模板组成：直接引导结构，模拟引导结构，桥接引导结构。尝试做一个比较好用的PE。<del>（然而还是没有微PE好用）</del></p><h2 id="本版本PE说明"><a href="#本版本PE说明" class="headerlink" title="本版本PE说明"></a>本版本PE说明</h2><h3 id="PE版本"><a href="#PE版本" class="headerlink" title="PE版本"></a>PE版本</h3><p>SkyPE_V4.0_Full_SK04200104B77LTSD0322A2</p><h3 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h3><h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><p>对BIOS的修改工具</p><p>包括：AMIbcp，Camlogo，MMtool，HXD十六进制编辑工具，以及万能一键备份BIOS工具</p><p>添加AIDA64，EasyBCD，CDI磁盘检测工具</p><p>网络支持版除了以上，还添加了向日葵远控工具（正在解决PE下Teamviewer玄学抽风问题）</p><p>添加VC运行库</p><h4 id="移除"><a href="#移除" class="headerlink" title="移除"></a>移除</h4><p>移除了一些冗余文件。</p><h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p>移植了Windows8PE的Legacy引导修复工具到Win10两个版本PE，主要是发现很多人真的不会用Dism++….我也很绝望啊。</p><p>稳定性改进。NVME驱动在z97板子上玄学蓝屏问题解决。</p><p>目录结构改进了亿点点，使对PE进行改动方便了很多。</p><p>以后大概就不会这么发了，太水了。会以一个汇总的方式来发版本更新。</p><p><a href="https://blog.skrshadow.cn/2020/03/22/PEUpdate/">点此进入更新历史</a></p><h3 id="分区结构方案"><a href="#分区结构方案" class="headerlink" title="分区结构方案"></a>分区结构方案</h3><p>UA分区：32MB，Fbinst分区格式。该分区作用为存储引导数据及引导器GRLDR</p><p>Data分区：大小视U盘空间实际大小而定，默认格式化为NTFS格式。此分区用于数据存放，无其他作用。</p><p>EFI分区：1024MB，FAT32格式。此分区用于存储引导数据及启动数据。具有唯一GUID。所以请不要对其进行磁盘操作，否则会造成PE无法启动。</p><h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><h4 id="Legacy启动顺序说明"><a href="#Legacy启动顺序说明" class="headerlink" title="Legacy启动顺序说明"></a>Legacy启动顺序说明</h4><p>BIOS收到指定启动器指令，载入U盘第一个扇区，即位于UA分区的GRLDR引导器。通过识别内嵌代码，指针跳转至EFI分区，寻找位于SkyPE文件夹下的CFG.ini。</p><p>CFG.ini中同样包含着两条重定向启动指针的命令。第一个会让其跳转至999文件夹下的PE.ini文件，该ini文件内包含着两条引导Bootmgr类文件的指令，分别为Core文件夹下的Win10文件和Win8文件。</p><p>Win10将重定向启动指针，使其读取BCD文件中的引导启动数据，（8888下的8PE），使其找到位于SkyPE文件夹下的SkyPE.WIM文件，至此引导过程结束，开始载入PE</p><h4 id="EFI启动顺序说明"><a href="#EFI启动顺序说明" class="headerlink" title="EFI启动顺序说明"></a>EFI启动顺序说明</h4><p>BIOS收到指定启动器说明，寻找U盘上GUID为C12A7328-F81F-11D2-BA4B-00A0C93EC93B的分区（即为EFI分区），并寻找该分区下的\EFI\BOOT\BOOTX64.EFI（64位，32位文件名为BOOTIA32.EFI）。该文件将会在\EFI\MICROSOFT\BOOT文件夹下寻找BCD文件（由于为了让该PE同时支持32位和64位两种启动环境，并且为了让其适用不同启动场景，该文件夹下有两个BCD文件。一个为B32，一个直接叫BCD）从BCD中读取对应数据之后就可以找到对应的Wim文件了。</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>1.重装系统之前一定要保证自己的数据安全。不要忘了备份。</p><p>2.若自行对PE进行修改，请不要格式化EFI分区和UA分区，这会使他们的GUID标识丢失从而无法启动。</p><p>3.禁止将其用于商业目的，否则nmsl。</p><h2 id="关于安装工具"><a href="#关于安装工具" class="headerlink" title="关于安装工具"></a>关于安装工具</h2><p>第一个Setup.exe支持移动硬盘等所有USB存储设备，第二个Setup2.exe作为备用安装程序，只能识别U盘主控的移动存储设备。建议使用第一个工具安装。比较稳。</p><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pan.baidu.com/s/1-thgfjFGFBpvYIMF40sP_g 提取码：flfw</span><br></pre></td></tr></tbody></table></figure></div><p><a href="https://pan.baidu.com/s/1-thgfjFGFBpvYIMF40sP_g" target="_blank" rel="noopener">嫌麻烦可以直接点这里然后自行输入提取码</a></p><h2 id="文件信息"><a href="#文件信息" class="headerlink" title="文件信息"></a>文件信息</h2><ul><li>文件名：SkyPE0322.7z</li><li>文件大小：962MB</li><li>SHA1：BA012A7F1F6E368A7367B4AC5540FC715A5F973D</li><li>CRC64：B44837D718BA86C7</li></ul><h2 id="疑惑但不说-jpg"><a href="#疑惑但不说-jpg" class="headerlink" title="疑惑但不说.jpg"></a>疑惑但不说.jpg</h2><p>LZMA2压缩可能是我配置不对？？怎么文件大小像吹气球一样。。。找到问题会重压上传。目前这个包也能用emmm，就是将近1GB，难顶。</p><p>/<em>Update in 2020.3.22 0:55 A.M</em>/</p><p>/<em>Author:Skrshadow</em>/</p></body></html>]]></content>
     
     <summary type="html">
     
       
       
         &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;“SkyOS”-Project-PE说明文档&quot;&gt;&lt;a href=&quot;#“SkyOS”-Project-PE说明文档&quot; class=&quot;headerlink&quot; title=&quot;“SkyOS” Project PE说明文档&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="Sky Project 分支" scheme="http://blog.skrshadow.cn/categories/Sky-Project-%E5%88%86%E6%94%AF/"/>
+    
+    
+      <category term="Source" scheme="http://blog.skrshadow.cn/tags/Source/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SkyPE V4更新历史</title>
+    <link href="http://blog.skrshadow.cn/2020/03/22/PEUpdate/"/>
+    <id>http://blog.skrshadow.cn/2020/03/22/PEUpdate/</id>
+    <published>2020-03-22T14:28:50.000Z</published>
+    <updated>2020-03-22T14:12:28.100Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="SkyPE-V4-0更新历史"><a href="#SkyPE-V4-0更新历史" class="headerlink" title="SkyPE V4.0更新历史"></a>SkyPE V4.0更新历史</h1><h2 id="2020-03-22（4-0322）"><a href="#2020-03-22（4-0322）" class="headerlink" title="2020.03.22（4.0322）"></a>2020.03.22（4.0322）</h2><h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><p>对BIOS的修改工具</p><p>包括：AMIbcp，Camlogo，MMtool，HXD十六进制编辑工具，以及万能一键备份BIOS工具</p><p>添加AIDA64，EasyBCD，CDI磁盘检测工具</p><p>网络支持版除了以上，还添加了向日葵远控工具（正在解决PE下Teamviewer玄学抽风问题）</p><p>添加VC运行库</p><h4 id="移除"><a href="#移除" class="headerlink" title="移除"></a>移除</h4><p>移除了一些冗余文件。</p><h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p>移植了Windows8PE的Legacy引导修复工具到Win10两个版本PE，主要是发现很多人真的不会用Dism++….我也很绝望啊。</p><p>稳定性改进。NVME驱动在z97板子上玄学蓝屏问题解决。</p><p>目录结构改进，使对PE进行改动方便了很多。</p><h2 id="2020-03-16（4-0316）"><a href="#2020-03-16（4-0316）" class="headerlink" title="2020.03.16（4.0316）"></a>2020.03.16（4.0316）</h2><h4 id="添加-1"><a href="#添加-1" class="headerlink" title="添加"></a>添加</h4><p>针对老平台安装Windows7需求而添加了USB3.0和Nvme驱动的安装工具</p><h4 id="移除-1"><a href="#移除-1" class="headerlink" title="移除"></a>移除</h4><p>这次没有移除任何东西</p><h4 id="改进-1"><a href="#改进-1" class="headerlink" title="改进"></a>改进</h4><p>工具包程序例行升级</p><p>升级列表：PE下Nvme驱动程序</p><p>（感谢某不知名404大佬提供的970 Pro的NVME驱动）</p><h2 id="2020-02-15（4-0215）"><a href="#2020-02-15（4-0215）" class="headerlink" title="2020.02.15（4.0215）"></a>2020.02.15（4.0215）</h2><h4 id="添加-2"><a href="#添加-2" class="headerlink" title="添加"></a>添加</h4><p>Win8XPE添加Dism++和CGI工具，Ghost版本升级，针对EFI-IA32设备添加一些工具。</p><p>UEFI模式引导菜单添加了支持网络的Windows PE</p><p><del>Win10PE（网络支持）添加了一个由于注册表问题引起的StatIsback任务栏黑色且无法调整透明度的Bug</del></p><h4 id="移除-2"><a href="#移除-2" class="headerlink" title="移除"></a>移除</h4><p>移除了为Legacy老机器定位的Win8PE。因为能启动这个的老机器基本都能启动现在的10。定位过于鸡肋。</p><p>移除了Grub4DOS引导的Legacy方式安装的Ubuntu。占用空间大，且功能残缺不全。</p><h4 id="改进-2"><a href="#改进-2" class="headerlink" title="改进"></a>改进</h4><p>工具包程序例行升级</p><p>升级列表：Everything Dism++</p><p>改进了引导结构，移除了原Win8PE需要的模拟光驱启动</p><p>原Windows 10 PE（网络支持）重做。大幅缩小体积。</p><p>使用新的压缩算法，每一个Windows Image文件都有不同程度的缩小。</p><h2 id="2020-01-13-V3-200113Alpha"><a href="#2020-01-13-V3-200113Alpha" class="headerlink" title="2020.01.13(V3.200113Alpha)"></a>2020.01.13(V3.200113Alpha)</h2><h4 id="添加-3"><a href="#添加-3" class="headerlink" title="添加"></a>添加</h4><p>微PE最新版的工具包</p><p>UEFI支持</p><h4 id="移除-3"><a href="#移除-3" class="headerlink" title="移除"></a>移除</h4><p>Windows10 PE （N）移除了以下应用程序</p><p>QQ（版本太老且无意义）</p><p>Teamviewer（版本太老且无法启动）</p><p>Word等文档（Hape才会在PE下用Word）</p><h4 id="改进-3"><a href="#改进-3" class="headerlink" title="改进"></a>改进</h4><p>工具包程序升级</p><p>升级列表：Dism++ DG 分区助手 CGI 等工具</p><p>更新了引导结构，采用了主流的三分区PE分区方案</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;SkyPE-V4-0更新历史&quot;&gt;&lt;a href=&quot;#SkyPE-V4-0更新历史&quot; class=&quot;headerlink&quot; title=&quot;SkyPE V4.0更新历史&quot;&gt;&lt;/a&gt;SkyPE V4.0更新历史&lt;/h1&gt;
       
     
     </summary>
@@ -508,32 +534,6 @@
     
     
       <category term="杂七杂八的东西" scheme="http://blog.skrshadow.cn/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E7%9A%84%E4%B8%9C%E8%A5%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Sky Project 项目说明</title>
-    <link href="http://blog.skrshadow.cn/2017/07/07/SkyProj/"/>
-    <id>http://blog.skrshadow.cn/2017/07/07/SkyProj/</id>
-    <published>2017-07-07T15:29:21.000Z</published>
-    <updated>2020-02-25T18:20:10.731Z</updated>
-    
-    <content type="html"><![CDATA[<html><head></head><body><h1 id="Sky-Project项目"><a href="#Sky-Project项目" class="headerlink" title="Sky Project项目"></a>Sky Project项目</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>差不多就是个整合了目前在搞的这些杂七杂八的奇怪东西的一个合集/吧。</p><h2 id="分支目录"><a href="#分支目录" class="headerlink" title="分支目录"></a>分支目录</h2><h3 id="Sky-OS"><a href="#Sky-OS" class="headerlink" title="Sky OS"></a>Sky OS</h3><p>Android定制项目</p><p>其实主要是MIUI玩多了，也玩腻了。总感觉MIUI8还差点火候。有设计却做不出来就很难受。慢慢做吧。</p><p>Windows定制项目</p><p>以前封装的应该有点精简经验了吧…暂时还做不到大砍刀，一个系统包4GB谁受得了，ES也没那么好用，不如去研究一下cmd（To Do）？</p><p>可惜没有第二台电脑进行测试。</p><h3 id="Sky-Tool"><a href="#Sky-Tool" class="headerlink" title="Sky Tool"></a>Sky Tool</h3><p>这个系列打算做一套Windows的实用工具。先从PE开始吧。</p><p>从以前的GhoPE慢慢来吧。只能做到对通用PE的小幅修改，不过好像同作者的那个微PE好像也有修改的余地。很多工具还是通用PE的原装老东西。主要是想要一个网络模块。就很难受了。</p><p>目前想要一个安全的PE，以后EFI肯定是主流了但是老方法又不是不能用。现在主要解决安装困难的问题。不是每个人都喜欢我这么折腾。新出的微PE的三分区方案可以考虑，找时间研究一下。</p><p>就是现在改出来的要么小改动还有以前的影子，要么大改动直接GG。算了，不要急功近利，慢慢来，会好的。</p><p>可惜找不到能帮我画图标 的人。</p><p>这个也慢慢找吧，不着急。反正就算找到了，迟早有一天这些东西也只有我自己一个人做下去。很多经验告诉我，对你这个东西热心的，可能也只存在于热心，而已。</p><h3 id="Sky-Server"><a href="#Sky-Server" class="headerlink" title="Sky Server"></a>Sky Server</h3><p>最后是想要一台全新的主机。越小越好。虽然现在这台花里胡哨的看着还真的不错。</p><p>还有就是想要一个自己的网站。不过服务器好贵啊。。听说备案也很麻烦。就当后话吧</p><p>自己的文件服务器就在我现在NAS的基础上来吧。FreeNAS好像挺好玩。</p><p>后续考虑加入硬件定制。</p><p>就BB这么多吧，明天傻逼学习还要上课。真不想上晚自习。</p><p>/<em>2017.07.07 23.29.21 深夜</em>/</p><p>/<em>====================</em>/</p><p>现在看自己那时候写的东西真好玩23333.高中的小纸条都留着就是个很好的习惯。真是不知道自己为什么那么傻，在这种地方试图找到同样的人。毕竟再怎么搞，本质上也不是啊。</p><p>以后要学乖了吧。这些人忌讳那些，就不说了吧。虽然可能会导致很多事情都忘了。也无所谓了，活下去就好，不要回头。以后的朋友大概也不可能给这种开放的权限了吧。当初决定把这些东西锁起来，真的是个明智的选择。</p><p>毕竟，从一开始，我就只能靠自己啊。</p><p>/<em>2020.02.19 使用Markdown重新排版</em>/</p><p>/<em>在此对这个家伙表示一下感谢吧。能让我这么觉得欠别人的你可是头一个啊233。他那么懒不可能我不让他看他不可能看这的23333，慢慢来吧，老习惯，曾经我收到的支持，我都会百倍还回去。别的也一样。不喜欢欠人人情。</em>/</p><p>/<em>小纸条都搞成电子版了，可以销毁原件了..真希望某人要是看见了这篇文章去练练字…最后我TM都放弃思考了手动输入了wdnmd</em>/</p></body></html>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;Sky-Project项目&quot;&gt;&lt;a href=&quot;#Sky-Project项目&quot; class=&quot;headerlink&quot; title=&quot;Sky Project项目&quot;&gt;&lt;/a&gt;Sky Project项目&lt;/h1&gt;&lt;h2 
-      
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="http://blog.skrshadow.cn/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="扯犊子" scheme="http://blog.skrshadow.cn/tags/%E6%89%AF%E7%8A%8A%E5%AD%90/"/>
     
   </entry>
   
