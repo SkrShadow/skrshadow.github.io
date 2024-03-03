@@ -1,28 +1,11 @@
-# Sky proj. 个人网页
+## 红雨的个人主页仓库
 
-## 库名
+原个人主页试验田，已转正为个人主页仓库。
 
-skrshadow.github.io
+因对于云服务器的价格极其不满而回归Hexo。~~还是静态香~~
 
-## 描述
+主题采用[@imaegoo](https://github.com/imaegoo)大佬魔改的[icarus](https://github.com/imaegoo/hexo-theme-icarus)。
 
-这里是试搭建网站试验仓库（？？？），总之乱搞就对了
+目前网页还是20年换到Typecho的最后一个版本，预计今天内就会迁移完成。
 
-网页Bug不少，功能也不够完善。
-
-那咋办嘛.jpg （战术后仰）
-
-
-
-
-
-
-
-
-
-
-
-
-/*Author：Skrshadow*/
-
-/*2020.02.17*/
+/*2024.03.03*/
